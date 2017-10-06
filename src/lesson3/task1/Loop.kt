@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import lesson7.task2.sumNeighbours
+
 /**
  * Пример
  *
@@ -60,7 +62,18 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var number = n
+    if ( n == 0 ) return 1
+    for ( i in 1..n  ){
+        if ( number >= 1 ){
+            count++
+        }
+        number /= 10
+    }
+    return count
+}
 
 /**
  * Простая
@@ -68,7 +81,11 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    if ( n == 1 ) return 1
+    if ( n == 2 ) return 1
+    else return fib( n-1 ) + fib( n-2 )
+}
 
 /**
  * Простая
@@ -76,8 +93,16 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
-
+fun lcm(m: Int, n: Int): Int {
+    var number = n
+    var number2 = m
+    while (( number2 > 0 ) && ( number > 0)){
+        if( number > number2 ) number = number % number2
+        else number2 = number2 % number
+    }
+    val x = (m * n) /( number + number2 )
+    return x
+}
 /**
  * Простая
  *
