@@ -108,14 +108,31 @@ fun lcm(m: Int, n: Int): Int {
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var d = 2
+    val number = n
+    if ( number == 2 ) d = 2
+    for( i in 2..n ){
+        if ( number % d != 0  )
+            d ++
+    }
+    return d
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    val number = n
+    var d = number - 1
+    for ( i in 1..n){
+        if ( number % d != 0 )
+            d --
+    }
+    return  d
+}
 
 /**
  * Простая
@@ -124,14 +141,21 @@ fun maxDivisor(n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var a = Math.max( m , n )
+    var b = Math.min( n , m )
+    if ( b % ( a % b ) != 0 ) return true
+    else return false
+
+    }
+
 
 /**
  * Простая
  *
  * Для заданных чисел m и n, m <= n, определить, имеется ли хотя бы один точный квадрат между m и n,
  * то есть, существует ли такое целое k, что m <= k*k <= n.
- * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
+ * Например, для интервала 21..28 21 <= 5*5 -<= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 
