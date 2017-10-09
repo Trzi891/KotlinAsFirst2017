@@ -1,6 +1,5 @@
 package lesson1.task1
 
-import lesson1.ask1.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
@@ -21,8 +20,6 @@ class Tests {
         assertEquals(0.0, discriminant(1.0, -2.0, 1.0), 1e-5)
         assertEquals(1.0, discriminant(1.0, 3.0, 2.0), 1e-5)
     }
-
-    private fun assertEquals(d: Double, discriminant: Int, d1: Double) {}
 
     @Test
     @Tag("Example")
@@ -68,8 +65,6 @@ class Tests {
         assertEquals(1.0, trackLength(0.0, 1.0, -1.0, 1.0), 1e-5)
         assertEquals(1.41, trackLength(1.0, 1.0, 2.0, 2.0), 1e-2)
     }
-
-    private fun assertEquals(d: Double, discriminant: Unit, d1: Double) {}
 
     @Test
     @Tag("Easy")
