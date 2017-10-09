@@ -56,7 +56,6 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val HalfLength  = FullLength * 0.5
     val Length1 = t1 * v1
     val Length2 = t2 * v2
-    val Length3 = t3 * v3
     var reasult: Double = 0.0
     if (HalfLength <= Length1) {
         reasult = HalfLength / v1
@@ -65,7 +64,6 @@ fun timeForHalfWay(t1: Double, v1: Double,
     } else {
         reasult = t1 + t2 + (HalfLength - Length1 - Length2) / v3
     }
-
     return reasult
 }
 /**
@@ -143,7 +141,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    var x:Int = 0
     return if (( a <= c ) && ( c < b) && ( b <= d)) {
         b - c
     }else if ( ( a == d ) || ( b == c ) ){
