@@ -1,9 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson2.task1
 
-import lesson1.ask1.discriminant
-import lesson1.ask1.sqr
-import lesson4.task1.abs
+import lesson1.task1.discriminant
+import lesson1.task1.sqr
 
 
 /**

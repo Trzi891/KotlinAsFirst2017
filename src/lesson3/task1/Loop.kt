@@ -1,9 +1,6 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
-import lesson1.ask1.sqr
-import lesson7.task2.sumNeighbours
-
 /**
  * Пример
  *

@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson6.task1
 
-import lesson1.ask1.sqr
+import lesson1.task1.sqr
 
 /**
  * Точка на плоскости
