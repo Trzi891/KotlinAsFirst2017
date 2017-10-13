@@ -62,7 +62,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var number = n
+    var number =Math.abs( n )
     if ( n == 0 ) return 1
     for ( i in 1..n  ){
         if ( number >= 1 ){
@@ -80,11 +80,22 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    if ( n == 1 ) return 1
-    if ( n == 2 ) return 1
-    else return fib( n-1 ) + fib( n-2 )
+    val number = n
+    var num1 = 1
+    var num2 = 1
+    var a = 0
+    var d = 2
+    if (n == 1 || n == 2 ) return 1
+    for ( i in 1..n ){
+        if ( d < number ){
+            d ++
+            a = num2
+            num2 += num1
+            num1 = a
+        }
+    }
+    return num2
 }
-
 /**
  * Простая
  *
@@ -109,7 +120,7 @@ fun lcm(m: Int, n: Int): Int {
 fun minDivisor(n: Int): Int {
     var d = 2
     val number = n
-    if ( number == 2 ) d = 2
+    if ( number == 2 ) return 2
     for( i in 2..n ){
         if ( number % d != 0  )
             d ++
