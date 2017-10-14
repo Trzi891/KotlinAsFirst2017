@@ -71,8 +71,8 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val d = Math.max( a , Math.max( b , c ) )
     val e = Math.min( a , Math.min( b ,c ) )
-    return  when ( d <= Math.max( r , s ) || ( a + b + c - d - e <= Math.max( r , s ) ) && e <= Math.min( r , s ) ){
-        (a * b <= r * s)||( b * c <= r * s)||( a * c <= r * s) -> true
+    return  when {
+         ( e <= Math.min( r , s ) ) && a + b + c - e - d <= Math.max( r , s ) -> true
         else -> false
     }
 
