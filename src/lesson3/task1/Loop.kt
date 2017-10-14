@@ -62,9 +62,9 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var number =Math.abs( n )
+    var number = Math.abs( n )
     if ( n == 0 ) return 1
-    for ( i in 1..n  ){
+    for ( i in 1..Math.abs( n ) ){
         if ( number >= 1 ){
             count++
         }
@@ -120,7 +120,6 @@ fun lcm(m: Int, n: Int): Int {
 fun minDivisor(n: Int): Int {
     var d = 2
     val number = n
-    if ( number == 2 ) return 2
     for( i in 2..n ){
         if ( number % d != 0  )
             d ++
