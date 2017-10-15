@@ -169,15 +169,16 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 -<= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()/* {
+fun squareBetweenExists(m: Int, n: Int): Boolean {
     var x = 1
-    if ( x == m || x == n ) return true
-    while ( x * x < m ){
-        x++
+    while( x * x <= n ){
+        if(x * x in m..n)
+            return true
+        x ++
+
     }
-    if( x * x in m..n)  return true
-    else return false
-}*/
+    return false
+}
 
 /**
  * Средняя
@@ -206,7 +207,6 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun revert(n: Int): Int {
 val s = n.toString()
 val r : String = s.reversed()
-
     return r.toInt()
 }
 
@@ -219,7 +219,14 @@ val r : String = s.reversed()
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    val s = n.toString()
+    val r : String = s.reversed()
+    return when{
+        r == s -> true
+        else -> false
+    }
+}
 
 /**
  * Средняя
@@ -227,7 +234,20 @@ fun isPalindrome(n: Int): Boolean = TODO()
  * Для заданного числа n определить, содержит ли оно различающиеся цифры.
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    val num = n.toString()
+    if ( num.length <= 1 ) return true
+    var i = 0
+    var j = 1
+    while (i < num.length) {
+            if (num.get(i).toInt() != num.get(j).toInt()) return false
+            else{
+                j++
+                i++
+            }
+    }
+    return true
+}
 
 /**
  * Сложная
