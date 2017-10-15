@@ -2,6 +2,7 @@
 package lesson3.task1
 
 import lesson1.task1.sqr
+import lesson4.task1.abs
 
 /**
  * Пример
@@ -186,7 +187,23 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val result = 0.0 ; var b = x ; var n = 0 ; var m = 0.0
+    var a = 0.000000 ; var k = 1 ;var p = 1.0 ; var q = 0
+    while ( Math.abs( b ) > eps ){
+        n ++
+        m = 2 * n + 1.0
+        p = 1.0
+        while ( q <= m ){
+            q ++
+            p *= q
+            b = k *( Math.pow( x , m ) ) / p
+            k = -k
+            a += b
+        }
+    }
+    return 0.0
+}
 
 /**
  * Средняя
@@ -208,7 +225,6 @@ val s = n.toString()
 val r : String = s.reversed()
     return r.toInt()
 }
-
 
 
 /**
@@ -255,7 +271,12 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    val num = n.toString()
+    var x = 0
+    x = num.get( n ).toInt()
+    return x
+}
 
 /**
  * Сложная
