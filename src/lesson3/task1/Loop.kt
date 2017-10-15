@@ -204,30 +204,10 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-    var count = 0.0
-    var number = Math.abs( n )
-    var sum1 = 0
-    var sum2 = 0
-    var sum = sum1 + sum2
-    if ( n == 0 ) return 1
-    while ( number >= 1 ){
-        count++
-        number /= 10
-    }
-    for ( i in 1..(count / 2).toInt() ){
-            if ( count % 2 == 0.0 ){
-               sum1 +=  (( n % Math.pow( 10.0 , i - 0.0 ) ) % Math.pow( 10.0 , i - 1.0 ) * Math.pow( 10.0 ,count - i  )).toInt()
-                sum2 += ( ( ( n / Math.pow( 10.0 ,count - i - 2.0 ) ) % Math.pow( 10.0 ,i - 1.0 ) )* Math.pow( 10.0 ,i - 1.0 ) ).toInt()
-                return sum
-            }else{
-                i in 1..(( count - 1 ) / 2).toInt()
-                sum1 += (( n % Math.pow( 10.0 , i - 0.0 ) ) % Math.pow( 10.0 , i - 1.0 )* Math.pow( 10.0 ,count - i  )).toInt()
-                sum2 += ( ( ( n / Math.pow( 10.0 ,count - i - 2.0 ) ) % Math.pow( 10.0 ,i - 1.0 ) )* Math.pow( 10.0 ,i - 1.0 ) ).toInt()
-                sum = (sum1 + sum2 + n % Math.pow( 10.0 ,( count - 1.0 ) / 2.0 ) % 10 * Math.pow( 10.0 , ( count - 1.0 ) / 2.0 )).toInt()
-                return sum
-            }
-        }
-    return sum
+val s = n.toString()
+val r : String = s.reversed()
+
+    return r.toInt()
 }
 
 
