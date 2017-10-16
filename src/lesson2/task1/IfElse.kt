@@ -35,8 +35,8 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String =when {
-    (age % 10 ==1) && (age %100 != 11) -> "$age год"
+fun ageDescription(age: Int): String = when {
+    (age % 10 == 1) && (age %100 != 11) -> "$age год"
     (age % 10 in 2..4) && (age % 100 !in 12..14) && (age !in 112..114) -> "$age года"
     else -> "$age лет"
 }
@@ -51,11 +51,11 @@ fun ageDescription(age: Int): String =when {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double):Double {
-    val FullLength = t1 * v1 + t2 * v2 + t3 * v3
+    val FullLength = ( t1 * v1 ) + ( t2 * v2 )+ ( t3 * v3 )
     val HalfLength  = FullLength * 0.5
     val Length1 = t1 * v1
     val Length2 = t2 * v2
-    var reasult: Double = 0.0
+    var reasult = 0.0
     if (HalfLength <= Length1) {
         reasult = HalfLength / v1
     } else if (HalfLength <= Length1 + Length2) {
@@ -140,15 +140,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return if (( a <= c ) && ( c < b) && ( b <= d)) {
-        b - c
-    }else if ( ( a == d ) || ( b == c ) ){
-        0
-    } else if ( ( c <= a )&& ( b <= d ) ) {
-        b - a
-    }else if ( ( a <= c ) && ( d <= b )){
-        d - c
-    }else if ( ( c <= a ) && ( a < d ) && ( d <= b )){
-        d - a
-    }else -1
+    return when {
+        ( a <= c ) && ( c < b) && ( b <= d) -> b - c
+        ( a == d ) || ( b == c )  -> 0
+        ( c <= a )&& ( b <= d ) -> b - a
+        ( a <= c ) && ( d <= b ) -> d - c
+        ( c <= a ) && ( a < d ) && ( d <= b ) -> d - a
+        else -> -1
+    }
 }

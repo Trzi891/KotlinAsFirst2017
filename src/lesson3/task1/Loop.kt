@@ -3,6 +3,7 @@ package lesson3.task1
 
 import lesson1.task1.sqr
 import lesson4.task1.abs
+import sun.security.util.Length
 
 /**
  * Пример
@@ -121,9 +122,7 @@ fun lcm(m: Int, n: Int): Int {
 fun minDivisor(n: Int): Int {
     var d = 2
     val number = n
-    while ( number % d != 0  ){
-            d ++
-    }
+    while ( number % d != 0  ) d ++
     return d
 }
 
@@ -149,18 +148,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    var d1 = Math.min( m , n )
-    var d2 = Math.max( m , n )
-    var d3 = 1
-    while ( d3 != 0 ){
-        d3 = d2 % d1
-        d2 = d1
-        d1 = d3
-    }
-    if ( d2 == 1 ) return true
-    else return false
-}
+fun isCoPrime(m: Int, n: Int): Boolean = ( m * n ) / lcm( m , n ) == 1
 
 
 /**
@@ -187,24 +175,27 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double {
-    val result = 0.0 ; var b = x ; var n = 0 ; var m = 0.0
-    var a = 0.000000 ; var k = 1 ;var p = 1.0 ; var q = 0
-    while ( Math.abs( b ) > eps ){
-        n ++
-        m = 2 * n + 1.0
-        p = 1.0
-        while ( q <= m ){
-            q ++
-            p *= q
-            b = k *( Math.pow( x , m ) ) / p
-            k = -k
-            a += b
+fun sin(x: Double, eps: Double): Double  = TODO()/*{
+    var M = 1 //分子  阶乘
+    var N = 1 //分母
+    var b = 1
+    var sum = 1
+    for( k in 1..Int.MAX_VALUE ）  {
+        b = Math.pow( - 1 , k - 1 ) * Math.pow( x ,2 * k - 1 )
+    }
+    for( i in 1..( 2 * k - 1 ) ){
+         sum *= i
+        if( ( b / sum ) < eps ){
+
+            }
         }
     }
-    return 0.0
-}
 
+     /* 表达式：b / sum
+      有
+    while (  )*/
+}
+*/
 /**
  * Средняя
  *
@@ -237,10 +228,7 @@ val r : String = s.reversed()
 fun isPalindrome(n: Int): Boolean {
     val s = n.toString()
     val r : String = s.reversed()
-    return when{
-        r == s -> true
-        else -> false
-    }
+    r == s
 }
 
 /**
@@ -285,10 +273,31 @@ val num = n.toString()
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    val num = n.toString()
+    var Length = 0L
+    var num = 0L
+    var numsqr = 0L
+    while( Length < n ){
+        num ++
+        numsqr = num * num
+        Length += digitNumber( numsqr.toInt() )
+    }
+    return when{
+        Length == 1L -> 1
+        Length.toInt() == n -> numsqr.toInt() % 10
+        else -> {
+            val delta = Length.toInt() - n
+            var result = numsqr.toInt()
+            for ( i in 1..delta ){
+                result /= 10
+            }
+            return result.toInt() % 10
+        }
+    }
+    /*val s = n.toString()
+    val Length1 = Length.toString()
     var x = 0
-    x = num.get( n ).toInt()
-    return x
+    x = Length1.get( n ).toInt()
+    return x*/
 }
 
 /**
@@ -298,4 +307,25 @@ fun squareSequenceDigit(n: Int): Int {
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var Length = 0L
+    var num = 0L
+    var fibnumber = 0L
+    while( Length < n ){
+        num++
+        fibnumber = fib(num.toInt() ).toLong()
+        Length += digitNumber( fibnumber.toInt() )
+    }
+    return when{
+        Length.toInt() == 1 || Length.toInt() == 2 -> 1
+        Length.toInt() == n -> fibnumber.toInt() % 10
+        else -> {
+            var result = fibnumber
+            val delta = Length.toInt() - n
+            for ( i in 1..delta ){
+                result /= 10
+            }
+            return result.toInt() % 10
+        }
+    }
+}
