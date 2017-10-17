@@ -212,9 +212,14 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Не использовать строки при решении задачи.
  */
 fun revert(n: Int): Int {
-val s = n.toString()
-val r : String = s.reversed()
-    return r.toInt()
+    var num = n
+    var reversed = 0
+    while (num != 0) {
+        val digit = num % 10
+        reversed = reversed * 10 + digit
+        num /= 10
+    }
+    return reversed
 }
 
 
@@ -226,9 +231,8 @@ val r : String = s.reversed()
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    val s = n.toString()
-    val r : String = s.reversed()
-    r == s
+    val num = revert( n )
+    return num == n
 }
 
 /**
@@ -241,14 +245,12 @@ fun hasDifferentDigits(n: Int): Boolean {
     var num = n
     var lastnum = 0
     if ( Math.abs( n ) < 10 ) return false
-    else {
-        while ( num > 10 ) {
+    while ( num > 10 ) {
             lastnum = num % 10
             num /= 10
             if ( num % 10 != lastnum ) return true
         }
         return false
-    }
 }
 /* How to current it :
 val num = n.toString()
@@ -256,7 +258,7 @@ val num = n.toString()
     var i = 0
     var j = 1
     while (i < num.length) {
-            if (num.get(i).toInt() != num.get(j).toInt()) return true
+            if (num.[i].toInt() != num.[j].toInt()) return true
             else{
                 j++
                 i++
