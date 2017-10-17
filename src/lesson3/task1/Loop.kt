@@ -175,27 +175,20 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double  = TODO()/*{
-    var M = 1 //分子  阶乘
-    var N = 1 //分母
-    var b = 1
-    var sum = 1
-    for( k in 1..Int.MAX_VALUE ）  {
-        b = Math.pow( - 1 , k - 1 ) * Math.pow( x ,2 * k - 1 )
+fun sin(x: Double, eps: Double): Double {
+    val base = x % ( 2 * Math.PI )
+    var result = base
+    var duoxiangshi = base
+    var count = 0
+    while ( Math.abs( duoxiangshi ) >= eps ){
+        count ++
+        duoxiangshi = Math.pow(base ,count.toDouble() * 2 + 1) / factorial(count * 2 + 1)
+        if ( count % 2 == 0 )result += duoxiangshi
+        else result -= duoxiangshi
     }
-    for( i in 1..( 2 * k - 1 ) ){
-         sum *= i
-        if( ( b / sum ) < eps ){
-
-            }
-        }
-    }
-
-     /* 表达式：b / sum
-      有
-    while (  )*/
+    return result
 }
-*/
+
 /**
  * Средняя
  *
@@ -203,7 +196,19 @@ fun sin(x: Double, eps: Double): Double  = TODO()/*{
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    val base = x % ( 2 * Math.PI )
+    var duoxiangshi = base
+    var count = 0
+    var result = 1.0
+    while ( Math.abs( duoxiangshi ) >= eps ){
+        count ++
+        duoxiangshi = Math.pow( base , count.toDouble() * 2 ) / factorial( 2 * count )
+        if ( count % 2 == 1 ) result -= duoxiangshi
+        else result += duoxiangshi
+    }
+    return result
+}
 
 /**
  * Средняя
