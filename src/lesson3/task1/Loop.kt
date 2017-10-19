@@ -121,8 +121,7 @@ fun lcm(m: Int, n: Int): Int {
  */
 fun minDivisor(n: Int): Int {
     var d = 2
-    val number = n
-    while ( number % d != 0  ) d ++
+    while ( n % d != 0  ) d ++
     return d
 }
 
@@ -256,20 +255,6 @@ fun hasDifferentDigits(n: Int): Boolean {
         }
         return false
 }
-/* How to current it :
-val num = n.toString()
-    if ( num.length <= 1 ) return false
-    var i = 0
-    var j = 1
-    while (i < num.length) {
-            if (num.[i].toInt() != num.[j].toInt()) return true
-            else{
-                j++
-                i++
-            }
-    }
-    return false*/
-
 
 /**
  * Сложная
@@ -299,11 +284,6 @@ fun squareSequenceDigit(n: Int): Int {
             return result.toInt() % 10
         }
     }
-    /*val s = n.toString()
-    val Length1 = Length.toString()
-    var x = 0
-    x = Length1.get( n ).toInt()
-    return x*/
 }
 
 /**

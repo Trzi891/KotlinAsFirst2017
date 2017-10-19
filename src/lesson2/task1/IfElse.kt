@@ -55,15 +55,11 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val HalfLength  = FullLength * 0.5
     val Length1 = t1 * v1
     val Length2 = t2 * v2
-    var reasult = 0.0
-    if (HalfLength <= Length1) {
-        reasult = HalfLength / v1
-    } else if (HalfLength <= Length1 + Length2) {
-        reasult = t1 + (HalfLength - Length1) / v2
-    } else {
-        reasult = t1 + t2 + (HalfLength - Length1 - Length2) / v3
+    return when {
+        HalfLength <= Length1 ->HalfLength / v1
+        HalfLength <= Length1 + Length2 ->t1 + (HalfLength - Length1) / v2
+        else -> t1 + t2 + (HalfLength - Length1 - Length2) / v3
     }
-    return reasult
 }
 /**
  * Простая
@@ -76,7 +72,7 @@ fun timeForHalfWay(t1: Double, v1: Double,
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int = when{
+                       rookX2: Int, rookY2: Int): Int = when {
     kingX != rookX1 && kingX != rookX2 && kingY != rookY1 && kingY != rookY2  -> 0
     ( kingX == rookX1|| kingY == rookY1) && ( kingX != rookX2 && kingY != rookY2 ) -> 1
     ( kingX ==rookX2 || kingY == rookY2 ) && ( kingX != rookX1 && kingY != rookY1 ) -> 2

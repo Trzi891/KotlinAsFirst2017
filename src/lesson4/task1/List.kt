@@ -109,8 +109,8 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  */
 fun abs(v: List<Double>): Double {
     var sum = 0.0
-    for ( i in 0..v.size - 1 ){
-        sum += v[i] * v[i]
+    for ( element in v  ){
+        sum += element * element
     }
     return Math.sqrt( sum )
 }
@@ -219,7 +219,7 @@ fun factorize(n: Int): List<Int> {
  * Разложить заданное натуральное число n > 1 на простые множители.
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = factorize(n).joinToString ( "*" )
 
 /**
  * Средняя
@@ -228,7 +228,18 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var a = n
+    val list = mutableListOf<Int>()
+    if ( a == 0 ) return listOf(0)
+    else{
+        while ( a > 0 ){
+            list.add( a % base )
+            a /= base
+        }
+    }
+    return list.reversed()
+}
 
 /**
  * Сложная
