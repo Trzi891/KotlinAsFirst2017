@@ -234,8 +234,7 @@ fun revert(n: Int): Int {
  * 15751 -- палиндром, 3653 -- нет.
  */
 fun isPalindrome(n: Int): Boolean {
-    val num = revert( n )
-    return num == n
+    return n == revert( n )
 }
 
 /**

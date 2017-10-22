@@ -54,6 +54,9 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
-( Math.min( a , Math.min( b ,c ) )  <= Math.min( r , s ) )
-        && a + b + c - Math.min( a , Math.min( b ,c ) ) - Math.max( a , Math.max( b , c ) ) <= Math.max( r , s )
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val minnum = Math.min( a , Math.min( b , c ))
+    val maxnum = Math.max( a , Math.max( b , c ))
+    return (minnum <= Math.min( r , s ) ) && (a + b + c - minnum - maxnum <= Math.max( r , s ))
+}
+
