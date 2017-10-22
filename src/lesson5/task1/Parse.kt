@@ -66,7 +66,38 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    val listdate = mutableListOf<String>()
+    if ( parts.size == 3 ){
+        try {
+            val day = parts[0].toInt()
+            val month = parts[1]
+            listdate.add( twoDigitStr( day ))
+            listdate.add( when {
+                month == "января" && day in 1..31 -> ".01."
+                month == "февраля" && day in 1..28 -> ".02."
+                month == "марта" && day in 1..31 -> ".03."
+                month == "апреля" && day in 1..30 -> ".04."
+                month == "мая" && day in 1..31 -> ".05."
+                month == "июня" && day in 1..30 -> ".06."
+                month == "июля" && day in 1..31 -> ".07."
+                month == "августа" && day in 1..31 -> ".08."
+                month == "сентября" && day in 1..30 -> ".09."
+                month == "октября" && day in 1..31 -> ".10."
+                month == "ноября" && day in 1..30 -> ".11."
+                month == "декабря" && day in 1..31 -> ".12."
+                    else -> return ""
+                } )
+            listdate.add( parts[2] )
+            }catch ( e: NumberFormatException ){
+            return ""
+        }
+        return listdate.joinToString("")
+    }
+    else return ""
+}
+
 
 /**
  * Средняя
@@ -75,7 +106,37 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val listDate = mutableListOf<String>()
+    val parts = digital.split(".")
+    if ( parts.size == 3 ){
+        try {
+            val Month = parts[1]
+            val day = parts[0].toInt()
+            listDate.add(day.toString())
+            listDate.add( when {
+                Month == "01" -> " января "
+                Month == "02" -> " февраля "
+                Month == "03" -> " марта "
+                Month == "04" -> " апреля "
+                Month == "05" -> " мая "
+                Month == "06" -> " июня "
+                Month == "07" -> " июля "
+                Month == "08" -> " августа "
+                Month == "09" -> " сентября "
+                Month == "10" -> " октября "
+                Month == "11" -> " ноября "
+                Month == "12" -> " декабря "
+                else -> return ""
+            })
+            listDate.add(parts[2])
+        }catch ( e: NumberFormatException ){
+            return ""
+        }
+        return listDate.joinToString ("")
+    }
+    else return ""
+}
 
 /**
  * Средняя
