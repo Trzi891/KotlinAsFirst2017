@@ -292,7 +292,7 @@ fun decimalFromString(str: String, base: Int): Int {
     val list = mutableListOf<Int>()
     for ( char in str ){
         if ( char in '0'..'9' ) list += ( char - '0' ).toInt()
-        else list += ( char - 'a' + 1 ).toInt()
+        else list += ( char - 'a' + 10 ).toInt()
     }
     return decimal( list , base )
 }
