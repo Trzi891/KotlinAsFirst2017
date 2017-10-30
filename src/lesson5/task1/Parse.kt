@@ -29,7 +29,7 @@ fun twoDigitStr(n: Int) = if (n in 0..9) "0$n" else "$n"
  * Пример
  *
  * Дано seconds -- время в секундах, прошедшее с начала дня.
- * Вернуть текущее время в виде строки в формате "ЧЧ:ММ:СС".
+ * Вернуть текущее время в виде  строки в формате "ЧЧ:ММ:СС".
  */
 fun timeSecondsToStr(seconds: Int): String {
     val hour = seconds / 3600
@@ -66,36 +66,22 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
+val months = listOf( "января","февраля","марта" ,"апреля","мая" , "июня",
+        "июля", "августа","сентября","октября", "ноября", "декабря" )
+
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    val listdate = mutableListOf<String>()
-    if ( parts.size == 3 ){
-        try {
-            val day = parts[0].toInt()
-            val month = parts[1]
-            listdate.add( twoDigitStr( day ))
-            listdate.add( when {
-                month == "января" && day in 1..31 -> ".01."
-                month == "февраля" && day in 1..28 -> ".02."
-                month == "марта" && day in 1..31 -> ".03."
-                month == "апреля" && day in 1..30 -> ".04."
-                month == "мая" && day in 1..31 -> ".05."
-                month == "июня" && day in 1..30 -> ".06."
-                month == "июля" && day in 1..31 -> ".07."
-                month == "августа" && day in 1..31 -> ".08."
-                month == "сентября" && day in 1..30 -> ".09."
-                month == "октября" && day in 1..31 -> ".10."
-                month == "ноября" && day in 1..30 -> ".11."
-                month == "декабря" && day in 1..31 -> ".12."
-                    else -> return ""
-                } )
-            listdate.add( parts[2] )
-            }catch ( e: NumberFormatException ){
-            return ""
-        }
-        return listdate.joinToString("")
+    if ( parts.size != 3 ) return ""
+    try {
+        val day = parts[0].toInt()
+        val month = parts[1]
+        val year = parts[2].toInt()
+        if ( day !in 1..31 || month !in months ) return ""
+        return String.format("%02d.%02d.%d", day, months.indexOf(month) + 1, year)
+    }catch (e:NumberFormatException){
+        return ""
     }
-    else return ""
+
 }
 
 
@@ -106,36 +92,18 @@ fun dateStrToDigit(str: String): String {
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String {
-    val listDate = mutableListOf<String>()
+   fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    if ( parts.size == 3 ){
-        try {
-            val Month = parts[1]
-            val day = parts[0].toInt()
-            listDate.add(day.toString())
-            listDate.add( when {
-                Month == "01" -> " января "
-                Month == "02" -> " февраля "
-                Month == "03" -> " марта "
-                Month == "04" -> " апреля "
-                Month == "05" -> " мая "
-                Month == "06" -> " июня "
-                Month == "07" -> " июля "
-                Month == "08" -> " августа "
-                Month == "09" -> " сентября "
-                Month == "10" -> " октября "
-                Month == "11" -> " ноября "
-                Month == "12" -> " декабря "
-                else -> return ""
-            })
-            listDate.add(parts[2])
-        }catch ( e: NumberFormatException ){
-            return ""
-        }
-        return listDate.joinToString ("")
+    if (parts.size != 3) return ""
+    try {
+        val day = parts[0].toInt()
+        val month = parts[1].toInt()
+        val year = parts[2].toInt()
+        if (day !in 1..31 || month !in 1..12) return ""
+        return String.format("%d %s %d", day, months[month - 1], year)
+    }catch (e:NumberFormatException){
+        return ""
     }
-    else return ""
 }
 
 /**
@@ -150,7 +118,13 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val phonefilter = phone.filter { it != ' ' && it != '-' }
+    val result = Regex( """(?:\+\d+)?(?:\(\d+\))?\d+""" )
+    if( !result.matches(phonefilter) ) return ""
+    return phonefilter.filter { it !in '('..')' }
+
+}
 
 /**
  * Средняя
@@ -162,7 +136,21 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val parts = jumps.split(" ").filter { it != "" }
+    var  max = -1
+    try {
+        for ( part in parts ){
+            if ( part != "%" && part != "-" ){
+                val number = part.toInt()
+                if ( max < number ) max = number
+            }
+        }
+    }catch ( e: NumberFormatException ){
+        return -1
+    }
+    return max
+}
 
 /**
  * Сложная
@@ -174,7 +162,15 @@ fun bestLongJump(jumps: String): Int = TODO()
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int = TODO()/*{
+    val parts = jumps.split(" ").filter { it != "" }
+    val result = -1
+    try {
+        for ( part in parts ){
+
+        }
+    }
+}*/
 
 /**
  * Сложная
@@ -185,7 +181,25 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val parts = expression.split( " " )
+    var result = 0
+    var sum = parts[0].toInt()
+    try {
+        for ( i in 0 until parts.size - 1){
+            while ( parts[i] == "-" ){
+                result = sum - parts[i + 1] .toInt()
+                if( parts[i] != "+" && parts[i] != "-" ){
+                    sum += parts[i].toInt()
+                    result = sum
+                }
+            }
+        }
+    }catch ( e:NumberFormatException ){
+        return -1
+    }
+    return result
+}
 
 /**
  * Сложная

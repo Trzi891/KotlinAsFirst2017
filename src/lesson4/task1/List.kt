@@ -305,7 +305,7 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String =TODO()
 
 /**
  * Очень сложная
@@ -314,4 +314,56 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val list1 = listOf( "сто","двести","триста","четыреста","пятьсот",
+            "шестысот","семьсот","восемьсот","девятьсот" )
+    val list2 = listOf( "десять","одиннадцать","девятнадцать","тринадцать",
+            "четырнадцать","пятнадцать","шестнадцать","семнадцать",
+            "восемнадцать","девятнадцать" )
+    val list3 = listOf( "двадцать", "тридцать","сорок","пятьдесят",
+            "шестьдесят","семьдесят","восемьдесят","девяносто")
+    val list4 = listOf( "один","два","три","четыре","пять","шесть","семь",
+            " восемь ","девять")
+    val result = mutableListOf<String>()
+    if ( n < 1000 ){
+        for ( i in 1..9 ){
+            if ( n / 100 == i )  result.add(list1[i - 1])
+        }
+        var p = n % 100
+        for( i in 1..9 ){
+            if ( p == 10 ) result.add(list2[0])
+            if ( p == i + 10 ) result.add(list2[i])
+            else{
+                p /= 10
+                for ( b in 2..9 ){
+                    if ( p == b ) result.add(list3[b - 2])
+                }
+                p = n % 10
+                if ( p == i ) result.add(list4[i - 1])
+            }
+        }
+
+    }else{
+        var thous = n / 1000
+        val unit = n % 1000
+        var x = 1
+        if ( (thous % 10 == 2) && (thous % 100 != 12) ){
+            thous = ( thous / 10 ) * 10
+            x = 0
+        }
+        if ( (thous % 10 == 1) && ( thous % 100 != 11 ) ){
+            thous = (thous / 10) * 10
+            x = 2
+        }
+        var str1 = russian(thous)
+        val str2 = russian(unit)
+        if ( (thous % 10 ==0) && (x == 1) ) str1 += " тысяч "
+        if ( thous % 10 == 1 ) str1 += " тысяча "
+        if ( (thous % 10 in 2..4) && (thous % 100 in 12..14) ) str1 += " тысячи "
+        if ( (thous % 10 in 5..9) || (thous % 100 in 12..14) ) str1 += " тысяч "
+        if ( x == 0 ) str1 += " две тысячи "
+        if ( x == 2 ) str1 += " одна тысяча "
+        result.add(str1 + str2)
+    }
+    return result.joinToString (" ")
+}
