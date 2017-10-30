@@ -305,7 +305,12 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String =TODO()
+fun roman(n: Int): String {
+    val listone = listOf( "I","IV","V","IX" )
+    val listdouble = listOf( "X","XL","L","XC" )
+    val listtrible = listOf( "C","CD","D","CM","M" )
+
+}
 
 /**
  * Очень сложная
@@ -317,13 +322,13 @@ fun roman(n: Int): String =TODO()
 fun russian(n: Int): String {
     val list1 = listOf( "сто","двести","триста","четыреста","пятьсот",
             "шестысот","семьсот","восемьсот","девятьсот" )
-    val list2 = listOf( "десять","одиннадцать","девятнадцать","тринадцать",
+    val list2 = listOf( "десять","одиннадцать","двенадцать","тринадцать",
             "четырнадцать","пятнадцать","шестнадцать","семнадцать",
             "восемнадцать","девятнадцать" )
     val list3 = listOf( "двадцать", "тридцать","сорок","пятьдесят",
             "шестьдесят","семьдесят","восемьдесят","девяносто")
     val list4 = listOf( "один","два","три","четыре","пять","шесть","семь",
-            " восемь ","девять")
+            "восемь","девять")
     val result = mutableListOf<String>()
     if ( n < 1000 ){
         for ( i in 1..9 ){
@@ -331,8 +336,10 @@ fun russian(n: Int): String {
         }
         var p = n % 100
         for( i in 1..9 ){
-            if ( p == 10 ) result.add(list2[0])
-            if ( p == i + 10 ) result.add(list2[i])
+            if ( p in 10..19 ){
+                if ( p == 10 ) result.add(list2[0])
+                if ( p == i + 10 ) result.add(list2[i])
+            }
             else{
                 p /= 10
                 for ( b in 2..9 ){
@@ -365,5 +372,5 @@ fun russian(n: Int): String {
         if ( x == 2 ) str1 += " одна тысяча "
         result.add(str1 + str2)
     }
-    return result.joinToString (" ")
+    return result.joinToString (" ").trim()
 }
