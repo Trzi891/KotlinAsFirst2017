@@ -339,7 +339,7 @@ fun russian(n: Int): String {
         var p = n % 100
         for( i in 1..9 ){
             if ( p in 10..19 ){
-                if ( p == 10 ) result.add(list2[0])
+                if ( ( i == 1 ) && ( p == i + 9 )) result.add(list2[0])
                 if ( p == i + 10 ) result.add(list2[i])
             }
             else{
