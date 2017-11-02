@@ -351,7 +351,6 @@ fun russian(n: Int): String {
                 if ( p == i ) result.add(list4[i - 1])
             }
         }
-
     }else{
         var thous = n / 1000
         val unit = n % 1000
@@ -367,7 +366,7 @@ fun russian(n: Int): String {
         var str1 = russian(thous)
         val str2 = russian(unit)
         if ( (thous % 10 ==0) && (x == 1) ) str1 += " тысяч "
-        if ( thous % 10 == 1 ) str1 += " тысяча "
+        if ( (thous % 10 == 1) && (x == 2)) str1 += " тысяча "
         if ( thous % 100 == 11 ) str1 += " тысяч "
         if ( (thous % 10 in 2..4) && (thous % 100 in 12..14) ) str1 += " тысячи "
         if ( (thous % 10 in 5..9) || (thous % 100 in 12..14) ) str1 += " тысяч "
