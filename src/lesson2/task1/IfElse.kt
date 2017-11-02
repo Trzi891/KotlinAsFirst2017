@@ -51,10 +51,10 @@ fun ageDescription(age: Int): String = when {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double):Double {
-    val FullLength = ( t1 * v1 ) + ( t2 * v2 ) + ( t3 * v3 )
-    val HalfLength  = FullLength * 0.5
     val Length1 = t1 * v1
     val Length2 = t2 * v2
+    val FullLength = Length1 + Length2 + ( t3 * v3 )
+    val HalfLength  = FullLength * 0.5
     return when {
         HalfLength <= Length1 ->HalfLength / v1
         HalfLength <= Length1 + Length2 ->t1 + (HalfLength - Length1) / v2

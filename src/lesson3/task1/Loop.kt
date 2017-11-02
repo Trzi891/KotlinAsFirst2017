@@ -263,9 +263,9 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var Length = 0L
     var num = 0L
     var numsqr = 0L
+    var Length = 0L
     while( Length < n ){
         num ++
         numsqr = num * num

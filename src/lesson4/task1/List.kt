@@ -306,9 +306,11 @@ fun decimalFromString(str: String, base: Int): Int {
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String = TODO()/*{
-    val listone = listOf( "I","IV","V","IX" )
-    val listdouble = listOf( "X","XL","L","XC" )
-    val listtrible = listOf( "C","CD","D","CM","M" )
+    val listone = listOf( "I","II","III","IV","V","VI","VII","VIII","IX" )
+    val listdouble = listOf( "X","XX","XXX","XL","L","LX","LXX","LXXX","XC" )
+    val listtrible = listOf( "C","CC","CCC","CD","D","DC","DCC","DCCC","CM","M" )
+    val resultList = mutableListOf<String>()
+    val N = n.toString()
 
 }*/
 
@@ -366,6 +368,7 @@ fun russian(n: Int): String {
         val str2 = russian(unit)
         if ( (thous % 10 ==0) && (x == 1) ) str1 += " тысяч "
         if ( thous % 10 == 1 ) str1 += " тысяча "
+        if ( thous % 100 == 11 ) str1 += " тысяч "
         if ( (thous % 10 in 2..4) && (thous % 100 in 12..14) ) str1 += " тысячи "
         if ( (thous % 10 in 5..9) || (thous % 100 in 12..14) ) str1 += " тысяч "
         if ( x == 0 ) str1 += " две тысячи "
