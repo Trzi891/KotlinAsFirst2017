@@ -184,12 +184,12 @@ fun bestHighJump(jumps: String): Int = TODO()/*{
 fun plusMinus(expression: String): Int {
     val parts = expression.split( " " )
     var result = 0
-    var sum = parts[0].toInt()
+    var sum = 0
     try {
-        for ( i in 0 until parts.size - 1){
+        for ( i in 0..parts.size - 1 ){
             while ( parts[i] == "-" ){
-                result = sum - parts[i + 1] .toInt()
-                if( parts[i] != "+" && parts[i] != "-" ){
+                sum -= parts[i + 1] .toInt()
+                if( parts[i] != "-" ){
                     sum += parts[i].toInt()
                     result = sum
                 }
