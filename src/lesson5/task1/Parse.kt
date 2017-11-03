@@ -186,7 +186,7 @@ fun plusMinus(expression: String): Int {
     var result = 0
     var sum = 0
     try {
-        for ( i in 0..parts.size - 1 ){
+        for ( i in 0 until parts.size  ){
             while ( parts[i] == "-" ){
                 sum -= parts[i + 1] .toInt()
                 if( parts[i] != "-" ){
