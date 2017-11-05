@@ -123,7 +123,6 @@ fun abs(v: List<Double>): Double {
 fun mean(list: List<Double>): Double = when {
     list.size == 0 -> 0.0
     else -> list.sum() /list.size
-
 }
 
 /**

@@ -244,15 +244,14 @@ fun isPalindrome(n: Int): Boolean {
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var num = n
-    var lastnum = 0
-    if ( Math.abs( n ) < 10 ) return false
-    while ( num > 10 ) {
-            lastnum = num % 10
-            num /= 10
-            if ( num % 10 != lastnum ) return true
+    if ( Math.abs(n) < 10) return false
+    else{
+    val str = n.toString()
+        for (i in 0..str.length / 2){
+        if (str[i] != str[i + 1]) return true
         }
-        return false
+    }
+    return false
 }
 
 /**
@@ -263,26 +262,16 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var num = 0L
-    var numsqr = 0L
-    var Length = 0L
-    while( Length < n ){
-        num ++
-        numsqr = num * num
-        Length += digitNumber( numsqr.toInt() )
+    val squarelist = mutableListOf<Int>()
+    var number = 0
+    for ( i in 1..n ){
+        squarelist.add(i * i)
     }
-    return when{
-        Length == 1L -> 1
-        Length.toInt() == n -> numsqr.toInt() % 10
-        else -> {
-            val delta = Length.toInt() - n
-            var result = numsqr.toInt()
-            for ( i in 1..delta ){
-                result /= 10
-            }
-            return result.toInt() % 10
-        }
+    val str = squarelist.joinToString ("")
+    for ( char in str ){
+        number = (str[n - 1] - '0').toInt()
     }
+    return number
 }
 
 /**
@@ -293,24 +282,14 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var Length = 0L
-    var num = 0L
-    var fibnumber = 0L
-    while( Length < n ){
-        num++
-        fibnumber = fib(num.toInt() ).toLong()
-        Length += digitNumber( fibnumber.toInt() )
+    val fiblist = mutableListOf<Int>()
+    var result = 0
+    for ( i in 1..n ) {
+        fiblist.add(fib(i))
     }
-    return when{
-        Length.toInt() == 1 || Length.toInt() == 2 -> 1
-        Length.toInt() == n -> fibnumber.toInt() % 10
-        else -> {
-            var result = fibnumber
-            val delta = Length.toInt() - n
-            for ( i in 1..delta ){
-                result /= 10
-            }
-            return result.toInt() % 10
-        }
+    val str = fiblist.joinToString ("")
+    for (char in str){
+        result = (str[n - 1] - '0').toInt()
     }
+    return result
 }

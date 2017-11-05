@@ -123,7 +123,6 @@ fun flattenPhoneNumber(phone: String): String {
     val result = Regex( """(?:\+\d+)?(?:\(\d+\))?\d+""" )
     if( !result.matches(phonefilter) ) return ""
     return phonefilter.filter { it !in '('..')' }
-
 }
 
 /**
@@ -182,23 +181,26 @@ fun bestHighJump(jumps: String): Int = TODO()/*{
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    val parts = expression.split( " " )
-    var result = 0
-    var sum = 0
+    val sumstring = Regex("""(?:(\d+\s+[-+]\s+)+)?\d+""")
     try {
-        for ( i in 0 until parts.size  ){
-            while ( parts[i] == "-" ){
-                sum -= parts[i + 1] .toInt()
-                if( parts[i] != "-" ){
-                    sum += parts[i].toInt()
-                    result = sum
-                }
+        if ( !sumstring.matches(expression) ){
+        throw IllegalArgumentException("IllegalArgumentException")
+    }
+    else{
+        val parts = expression.split(" ")
+        var sum = parts[0].toInt()
+        for ( i in 0 .. parts.size - 3 step 2){
+            if (parts[i + 1] == "+"){
+                sum += parts[i + 2].toInt()
+            }else {
+                sum -= parts[i + 2].toInt()
             }
         }
-    }catch ( e:NumberFormatException ){
-        return -1
+        return sum
     }
-    return result
+    }catch (e: NumberFormatException){
+        throw IllegalArgumentException("IllegalArgumentException")
+    }
 }
 
 /**
