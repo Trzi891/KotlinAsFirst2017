@@ -308,26 +308,28 @@ fun roman(n: Int): String {
     val list1 = listOf( "I","II","III","IV","V","VI","VII","VIII","IX" )
     val list2 = listOf( "X","XX","XXX","XL","L","LX","LXX","LXXX","XC" )
     val list3 = listOf( "C","CC","CCC","CD","D","DC","DCC","DCCC","CM" )
-    val list4 = listOf( "M","MM","MMM","MMMM","MMMMM","MMMMMM","MMMMMMM","MMMMMMMM","MMMMMMMMM" )
+    val list4 = listOf( "M")
     val result = mutableListOf<String>()
     if ( n < 1000 ){
         for ( i in 1..9 ){
             if ( n / 100 == i ) result.add(list3[i - 1])
         }
         val a = n % 100
-        for ( i in 1..9 ){
-            if ( (a < 10) && (a == i) ) result.add(list1[i - 1])
-            else{
-                if ( (a / 10) == i ) result.add(list2[i - 1])
-                if ( (n % 10) == i ) result.add(list1[i - 1])
-            }
+        for (i in 1..9) {
+            if ( (a / 10) == i && (a >= 10) ) result.add(list2[i - 1])
         }
+        for ( i in 1..9 ){
+            if ( (n % 10) == i ) result.add(list1[i - 1])
+        }
+
     }else{
         val thous = n / 1000
         val rest =  n % 1000
         val str1 = roman(rest)
-        for ( x in 1 ..9 ){
-            if ( thous == x ) result.add(list4[x - 1])
+        var x = 0
+        while ( x < thous) {
+            x++
+            result.add(list4[0])
         }
         result.add(str1)
     }
