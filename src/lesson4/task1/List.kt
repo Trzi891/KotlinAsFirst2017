@@ -308,7 +308,7 @@ fun roman(n: Int): String {
     val list1 = listOf( "I","II","III","IV","V","VI","VII","VIII","IX" )
     val list2 = listOf( "X","XX","XXX","XL","L","LX","LXX","LXXX","XC" )
     val list3 = listOf( "C","CC","CCC","CD","D","DC","DCC","DCCC","CM" )
-    val list4 = listOf( "M","MM","MMM" )
+    val list4 = listOf( "M","MM","MMM","MMMM","MMMMM","MMMMMM","MMMMMMM","MMMMMMMM","MMMMMMMMM" )
     val result = mutableListOf<String>()
     if ( n < 1000 ){
         for ( i in 1..9 ){
@@ -326,7 +326,7 @@ fun roman(n: Int): String {
         val thous = n / 1000
         val rest =  n % 1000
         val str1 = roman(rest)
-        for ( x in 1 ..4 ){
+        for ( x in 1 ..9 ){
             if ( thous == x ) result.add(list4[x - 1])
         }
         result.add(str1)
@@ -353,22 +353,22 @@ fun russian(n: Int): String {
             "восемь","девять")
     val result = mutableListOf<String>()
     if ( n < 1000 ){
-        for ( i in 1..9 ){//百位
+        for ( i in 1..9 ){
             if ( n / 100 == i )  result.add(list1[i - 1])
         }
         var p = n % 100
-        for( i in 1..9 ){//个位和十位
-            if ( p in 10..19 ){//个位和十位
+        for( i in 1..9 ){
+            if ( p in 10..19 ){
                 if (( i == 1 ) && ( p == i + 9 )) result.add(list2[0])
-                if ( p == i + 10 ) result.add(list2[i])//十几
+                if ( p == i + 10 ) result.add(list2[i])
             }
-            else{//个位和十位
+            else{
                 p /= 10
                 for ( b in 2..9 ){
-                    if ( p == b ) result.add(list3[b - 2])//几十
+                    if ( p == b ) result.add(list3[b - 2])
                 }
                 p = n % 10
-                if ( p == i ) result.add(list4[i - 1])//个位
+                if ( p == i ) result.add(list4[i - 1])
             }
         }
     }else{
