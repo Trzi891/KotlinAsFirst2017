@@ -304,14 +304,35 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()/*{
-    val listone = listOf( "I","II","III","IV","V","VI","VII","VIII","IX" )
-    val listdouble = listOf( "X","XX","XXX","XL","L","LX","LXX","LXXX","XC" )
-    val listtrible = listOf( "C","CC","CCC","CD","D","DC","DCC","DCCC","CM","M" )
-    val resultList = mutableListOf<String>()
-    val N = n.toString()
-
-}*/
+fun roman(n: Int): String {
+    val list1 = listOf( "I","II","III","IV","V","VI","VII","VIII","IX" )
+    val list2 = listOf( "X","XX","XXX","XL","L","LX","LXX","LXXX","XC" )
+    val list3 = listOf( "C","CC","CCC","CD","D","DC","DCC","DCCC","CM" )
+    val list4 = listOf( "M","MM","MMM" )
+    val result = mutableListOf<String>()
+    if ( n < 1000 ){
+        for ( i in 1..9 ){
+            if ( n / 100 == i ) result.add(list3[i - 1])
+        }
+        val a = n % 100
+        for ( i in 1..9 ){
+            if ( (a < 10) && (a == i) ) result.add(list1[i - 1])
+            else{
+                if ( (a / 10) == i ) result.add(list2[i - 1])
+                if ( (n % 10) == i ) result.add(list1[i - 1])
+            }
+        }
+    }else{
+        val thous = n / 1000
+        val rest =  n % 1000
+        val str1 = roman(rest)
+        for ( x in 1 ..4 ){
+            if ( thous == x ) result.add(list4[x - 1])
+        }
+        result.add(str1)
+    }
+    return result.joinToString ("")
+}
 
 /**
  * Очень сложная
@@ -332,22 +353,22 @@ fun russian(n: Int): String {
             "восемь","девять")
     val result = mutableListOf<String>()
     if ( n < 1000 ){
-        for ( i in 1..9 ){
+        for ( i in 1..9 ){//百位
             if ( n / 100 == i )  result.add(list1[i - 1])
         }
         var p = n % 100
-        for( i in 1..9 ){
-            if ( p in 10..19 ){
+        for( i in 1..9 ){//个位和十位
+            if ( p in 10..19 ){//个位和十位
                 if (( i == 1 ) && ( p == i + 9 )) result.add(list2[0])
-                if ( p == i + 10 ) result.add(list2[i])
+                if ( p == i + 10 ) result.add(list2[i])//十几
             }
-            else{
+            else{//个位和十位
                 p /= 10
                 for ( b in 2..9 ){
-                    if ( p == b ) result.add(list3[b - 2])
+                    if ( p == b ) result.add(list3[b - 2])//几十
                 }
                 p = n % 10
-                if ( p == i ) result.add(list4[i - 1])
+                if ( p == i ) result.add(list4[i - 1])//个位
             }
         }
     }else{
