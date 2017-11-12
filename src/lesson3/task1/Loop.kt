@@ -248,7 +248,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     else{
     val str = n.toString()
         for (i in 0..str.length / 2){
-        if (str[i] != str[i + 1]) return true
+            if (str[i] != str[i + 1]) return true
         }
     }
     return false
@@ -267,9 +267,8 @@ fun squareSequenceDigit(n: Int): Int {
     for ( i in 1..n ){
         squarelist.add(i * i)
     }
-    val str = squarelist.joinToString ("")
-    for ( char in str ){
-        number = (str[n - 1] - '0').toInt()
+    for ( char in squarelist.joinToString ("")){
+        number = (squarelist.joinToString ("")[n - 1] - '0').toInt()
     }
     return number
 }
@@ -287,9 +286,8 @@ fun fibSequenceDigit(n: Int): Int {
     for ( i in 1..n ) {
         fiblist.add(fib(i))
     }
-    val str = fiblist.joinToString ("")
-    for (char in str){
-        result = (str[n - 1] - '0').toInt()
+    for (char in fiblist.joinToString ("")){
+        result = (fiblist.joinToString ("")[n - 1] - '0').toInt()
     }
     return result
 }
