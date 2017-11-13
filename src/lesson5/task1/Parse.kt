@@ -119,10 +119,10 @@ fun dateStrToDigit(str: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val phonefilter = phone.filter { it != ' ' && it != '-' }
-    val result = Regex( """(?:\+\d+)?(?:\(\d+\))?\d+""" )
-    if( !result.matches(phonefilter) ) return ""
-    return phonefilter.filter { it !in '('..')' }
+    val phonee = phone.filter { it != ' ' && it != '-' }
+    val result = Regex("""(?:\+\d+)?(?:\(\d+\))?\d+""")
+    if (!result.matches(phonee)) return ""
+    return phonee.filter { it != '(' && it != ')' }
 }
 
 /**
@@ -161,15 +161,24 @@ fun bestLongJump(jumps: String): Int {
  * Прочитать строку и вернуть максимальную взятую высоту (230 в примере).
  * При нарушении формата входной строки вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()/*{
-    val parts = jumps.split(" ").filter { it != "" }
-    val result = -1
-    try {
-        for ( part in parts ){
-
+fun bestHighJump(jumps: String): Int {
+    var max = 0
+    var count = 0
+    val parts = jumps.split(" ")
+    if (parts.size <= 1) return -1
+    else{
+        for ( i in 0..(parts.size - 1) step 2 ){
+            val jumpregular = Regex("""\d+[-+%]+""")
+            if ( !jumpregular.matches(parts[i] + parts[i + 1]) ) return -1
+            if ( '+' in parts[i + 1] && parts[i].toInt() >= max ){
+                max = parts[i].toInt()
+                count ++
+            }
         }
     }
-}*/
+    if (count > 0) return max
+    else return -1
+}
 
 /**
  * Сложная
@@ -189,7 +198,7 @@ fun plusMinus(expression: String): Int {
     else{
         val parts = expression.split(" ")
         var sum = parts[0].toInt()
-        for ( i in 0 .. parts.size - 3 step 2){
+        for ( i in 0 until (parts.size - 2) step 2){
             if (parts[i + 1] == "+"){
                 sum += parts[i + 2].toInt()
             }else {
@@ -212,10 +221,15 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()/*{
-    val parts = str.split("")
-    val partsOfstr = str.split(" ")
-}*/
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.toLowerCase().split(" ").filter { it != "" }
+    var result = 0
+    for (i in 0 until parts.size - 1) {
+        if (parts[i] == parts[i + 1]) return result
+        result += parts[i].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная
@@ -228,7 +242,24 @@ fun firstDuplicateIndex(str: String): Int = TODO()/*{
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var result = ""
+    try {
+        val parts = description.split(";")
+        var maxprice = 0.0
+        for ( element in parts){
+            val place = element.lastIndexOf(" ")
+            val price = element.drop(place + 1).toDouble()
+            if (price >= maxprice){
+                result = element.take(place)
+                maxprice = price
+            }
+        }
+    }catch (e:NumberFormatException){
+        return ""
+    }
+    return result.trim()
+}
 
 /**
  * Сложная
@@ -241,7 +272,76 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+    var result = 0
+    val romanstr = Regex("""[IVXLCDM]+""")
+    if (!romanstr.matches(roman)) return  -1
+    else{
+        if (roman.length == 1){
+            when(roman[0]){
+                'I' -> result += 1
+                'V' -> result += 5
+                'X' -> result += 10
+                'L' -> result += 50
+                'C' -> result += 100
+                'D' -> result += 500
+                'M' -> result += 1000
+            }
+        }
+        else{
+            for (i in 0 until roman.length ){
+                when(roman[i]){
+                    'M' -> {
+                        if (i == 0) result += 1000
+                        else if (roman[i - 1] == 'C') result += 900
+                        else result += 1000
+                    }
+                    'D' ->{
+                        if (i == 0) result += 500
+                        else if (roman[i - 1] == 'C') result += 400
+                        else result += 500
+                    }
+                    'C' -> {
+                        if (i == 0) {
+                            if (roman[i + 1] !in 'D'..'M') result += 100
+                        }
+                        else if (i == roman.length - 1) {
+                            if (roman[i - 1] != 'X') result += 100  else result += 90
+                        }
+                        else if ((roman[i - 1] != 'X') && (roman[i + 1] !in 'D'..'M')) result += 100
+                        else if (roman[i - 1] == 'X')result += 90
+                    }
+                    'L' -> {
+                        if (i == 0) result += 50
+                        else if (roman[i - 1] == 'X') result += 40
+                        else result += 50
+                    }
+                    'X' -> {
+                        if (i == 0) {
+                            if(roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
+                        }
+                        else if (i == roman.length - 1) {
+                            if (roman[i - 1] == 'I') result += 9
+                            else result += 10
+                        }
+                         else if(roman[i]== 'I') result += 9
+                        else if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
+                    }
+                    'V' -> {
+                        if (i == 0) result += 5
+                        else if (roman[i - 1] == 'I') result += 4
+                        else result += 5
+                    }
+                    'I' -> {
+                        if (i == roman.length - 1 ) result += 1
+                        else if (roman[i + 1] != 'V' && roman[i + 1] != 'X') result += 1
+                    }
+                }
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Очень сложная
