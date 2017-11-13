@@ -72,14 +72,18 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double {
+        val d = center.distance(other.center) - radius - other.radius
+        if (d < 0.0) return 0.0
+        else return d
+    }
 
     /**
      * Тривиальная
      *
      * Вернуть true, если и только если окружность содержит данную точку НА себе или ВНУТРИ себя
      */
-    fun contains(p: Point): Boolean = TODO()
+    fun contains(p: Point): Boolean = center.distance(p) <= radius
 }
 
 /**
@@ -99,7 +103,19 @@ data class Segment(val begin: Point, val end: Point) {
  * Дано множество точек. Вернуть отрезок, соединяющий две наиболее удалённые из них.
  * Если в множестве менее двух точек, бросить IllegalArgumentException
  */
-fun diameter(vararg points: Point): Segment = TODO()
+fun Segment.length() = begin.distance(end)
+
+fun Segment.mid() = Point((begin.x + end.x) / 2, (begin.y + end.y) / 2)
+
+fun diameter(vararg points: Point): Segment {
+    var longest = Segment(points.first(), points.last())
+    for (element1 in points) {
+        for (element2 in points) {
+            if (element1.distance(element2) > longest.length()) longest = Segment(element1, element2)
+        }
+    }
+    return longest
+}
 
 /**
  * Простая
@@ -107,13 +123,14 @@ fun diameter(vararg points: Point): Segment = TODO()
  * Построить окружность по её диаметру, заданному двумя точками
  * Центр её должен находиться посередине между точками, а радиус составлять половину расстояния между ними
  */
-fun circleByDiameter(diameter: Segment): Circle = TODO()
+fun circleByDiameter(diameter: Segment): Circle = Circle(diameter.mid(),diameter.length() / 2)
 
 /**
  * Прямая, заданная точкой point и углом наклона angle (в радианах) по отношению к оси X.
- * Уравнение прямой: (y - point.y) * cos(angle) = (x - point.x) * sin(angle)
+ * Уравнение прямой: (y - point.y) * cos(angle) = (x - point.x) * sin(angle)线的方程
  * или: y * cos(angle) = x * sin(angle) + b, где b = point.y * cos(angle) - point.x * sin(angle).
  * Угол наклона обязан находиться в диапазоне от 0 (включительно) до PI (исключительно).
+ * 角度在0.。180
  */
 class Line private constructor(val b: Double, val angle: Double) {
     init {
@@ -128,7 +145,15 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
-    fun crossPoint(other: Line): Point = TODO()
+    fun crossPoint(other: Line): Point =TODO()/*{
+        val x = when{
+            angle == Math.PI / 2 -> point.x
+            other.angle == Math.PI / 2 -> other.point.x
+            else -> (other.point.y - point.y - other.point.x * Math.tan(other.angle) + point.x*Math.tan(angle))/
+                    (Math.tan(angle) - Math.tan(other.angle))
+        }
+
+    }*/
 
     override fun equals(other: Any?) = other is Line && angle == other.angle && b == other.b
 
