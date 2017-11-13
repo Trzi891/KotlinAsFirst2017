@@ -308,7 +308,6 @@ fun roman(n: Int): String {
     val list1 = listOf( "I","II","III","IV","V","VI","VII","VIII","IX" )
     val list2 = listOf( "X","XX","XXX","XL","L","LX","LXX","LXXX","XC" )
     val list3 = listOf( "C","CC","CCC","CD","D","DC","DCC","DCCC","CM" )
-    val list4 = listOf( "M")
     val result = mutableListOf<String>()
     if ( n < 1000 ){
         for ( i in 1..9 ){
@@ -329,7 +328,7 @@ fun roman(n: Int): String {
         var x = 0
         while ( x < thous) {
             x++
-            result.add(list4[0])
+            result.add("M")
         }
         result.add(str1)
     }

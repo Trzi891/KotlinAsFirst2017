@@ -303,12 +303,12 @@ fun fromRoman(roman: String): Int {
                     }
                     'C' -> {
                         if (i == 0) {
-                            if (roman[i + 1] !in 'D'..'M') result += 100
+                            if (roman[i + 1] != 'D'&& roman[i + 1] != 'M') result += 100
                         }
                         else if (i == roman.length - 1) {
                             if (roman[i - 1] != 'X') result += 100  else result += 90
                         }
-                        else if ((roman[i - 1] != 'X') && (roman[i + 1] !in 'D'..'M')) result += 100
+                        else if ((roman[i - 1] != 'X') && (roman[i + 1] != 'D'&& roman[i + 1] != 'M')) result += 100
                         else if (roman[i - 1] == 'X')result += 90
                     }
                     'L' -> {

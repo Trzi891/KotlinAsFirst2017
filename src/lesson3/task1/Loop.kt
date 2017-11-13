@@ -262,15 +262,26 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 fun squareSequenceDigit(n: Int): Int {
-    val squarelist = mutableListOf<Int>()
-    var number = 0
-    for ( i in 1..n ){
-        squarelist.add(i * i)
+    var length = 0
+    var num = 0
+    var numsqr = 0
+    while( length < n ){
+        num ++
+        numsqr = num * num
+        length += digitNumber( numsqr )
     }
-    for ( char in squarelist.joinToString ("")){
-        number = (squarelist.joinToString ("")[n - 1] - '0').toInt()
+    return when{
+        length == 1 -> 1
+        length == n -> numsqr % 10
+        else -> {
+            val delta = length - n
+            var result = numsqr
+            for ( i in 1..delta ){
+                result /= 10
+            }
+            return result % 10
+        }
     }
-    return number
 }
 
 /**
