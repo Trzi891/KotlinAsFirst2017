@@ -379,4 +379,13 @@ fun fromRoman(roman: String): Int {
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> =TODO()/*{
+    val formal = Regex("""[+-><]+|\[\]""")
+    try {
+        if ( !formal.matches(commands) ){
+            throw IllegalArgumentException("IllegalArgumentException")
+        }
+        else{
+
+        }
+}*/
