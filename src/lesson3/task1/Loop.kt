@@ -244,9 +244,8 @@ fun isPalindrome(n: Int): Boolean {
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    if ( Math.abs(n) < 10) return false
-    else{
     val str = n.toString()
+    if ( Math.abs(n) >= 10){
         for (i in 0..str.length / 2){
             if (str[i] != str[i + 1]) return true
         }
@@ -292,13 +291,24 @@ fun squareSequenceDigit(n: Int): Int {
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
 fun fibSequenceDigit(n: Int): Int {
-    val fiblist = mutableListOf<Int>()
-    var result = 0
-    for ( i in 1..n ) {
-        fiblist.add(fib(i))
+    var length = 0
+    var number = 0
+    var fibNumber = 0
+    while( length < n ) {
+        number++
+        fibNumber = fib( number )
+        length += digitNumber( fibNumber )
     }
-    for (char in fiblist.joinToString ("")){
-        result = (fiblist.joinToString ("")[n - 1] - '0').toInt()
+    return when {
+        length == 1 -> 1
+        length == n -> fibNumber % 10
+        else -> {
+            val delta = length - n
+            var result = fibNumber
+            for( i in 1..delta ) {
+                result /= 10
+            }
+            return result % 10
+        }
     }
-    return result
 }
