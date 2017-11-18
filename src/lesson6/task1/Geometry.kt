@@ -239,8 +239,8 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
     val segmentab = bisectorByPoints(a, b)
-    val segmentbc = bisectorByPoints(b,c)
-    return Circle(segmentab.crossPoint(segmentbc), a.distance(segmentab.crossPoint(segmentbc)))
+    val segmentac = bisectorByPoints(a,c)
+    return Circle(segmentab.crossPoint(segmentac), a.distance(segmentab.crossPoint(segmentac)))
 }
 
 /**

@@ -230,10 +230,19 @@ fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
 fun sqr(x: Int) = x * x
 fun knightMoveNumber(start: Square, end: Square): Int {
     if (start.inside() && end.inside()){
-        return when(sqr(end.row - start.row) + sqr(end.column - start.column)){
-            0 -> 0
-
-            else -> 6
+        val lstart = listOf<Square>(Square(1,1),Square(1,8),Square(8,1),Square(8,8))
+        val lend = listOf<Square>(Square(1,1),Square(1,8),Square(8,1),Square(8,8))
+        return when {
+            sqr(end.row - start.row) + sqr(end.column - start.column ) == 2 && (start in lstart || end in lend) -> 4
+                else ->when(sqr(end.row - start.row) + sqr(end.column - start.column)){
+                0 -> 0
+                5 -> 1
+                in listOf<Int>(2,4,10,16,18,20) -> 2
+                in listOf<Int>(1,9,13,17,25,29,37,41,45) -> 3
+                in listOf<Int>(8,26,32,34,40,50,52,58,72,74) -> 4
+                in listOf<Int>(49,53,61,65,85) -> 5
+                else -> 6
+            }
         }
     }else throw IllegalArgumentException("IllegalArgumentException")
 }
