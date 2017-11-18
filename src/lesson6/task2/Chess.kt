@@ -231,9 +231,8 @@ fun sqr(x: Int) = x * x
 fun knightMoveNumber(start: Square, end: Square): Int {
     if (start.inside() && end.inside()){
         val lstart = listOf<Square>(Square(1,1),Square(1,8),Square(8,1),Square(8,8))
-        val lend = listOf<Square>(Square(1,1),Square(1,8),Square(8,1),Square(8,8))
         return when {
-            sqr(end.row - start.row) + sqr(end.column - start.column ) == 2 && (start in lstart || end in lend) -> 4
+            sqr(end.row - start.row) + sqr(end.column - start.column ) == 2 && (start in lstart || end in lstart) -> 4
                 else ->when(sqr(end.row - start.row) + sqr(end.column - start.column)){
                 0 -> 0
                 5 -> 1
