@@ -156,12 +156,12 @@ class Line private constructor(val b: Double, val angle: Double) {
             angle == Math.PI / 2 -> b * -1 //dui
             other.angle == Math.PI / 2 -> other.b * -1
             else ->((other.b / Math.cos(other.angle) - b / Math.cos(angle)) /
-                    (Math.tan(angle) - Math.tan(other.angle))).toInt().toDouble()
+                    (Math.tan(angle) - Math.tan(other.angle)))
         }
         val y = when{
             angle == Math.PI / 2 ->other.b //dui
             other.angle == Math.PI / 2 -> b / Math.cos(angle)
-            else ->((x * Math.sin(other.angle) + b) / Math.cos(angle)).toInt().toDouble()
+            else ->((x * Math.sin(other.angle) + b) / Math.cos(angle))
         }
         return Point(x,y)
     }

@@ -227,7 +227,16 @@ fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
  * 走法： 日， L
  */
-fun knightMoveNumber(start: Square, end: Square): Int = TODO()
+fun sqr(x: Int) = x * x
+fun knightMoveNumber(start: Square, end: Square): Int {
+    if (start.inside() && end.inside()){
+        return when(sqr(end.row - start.row) + sqr(end.column - start.column)){
+            0 -> 0
+
+            else -> 6
+        }
+    }else throw IllegalArgumentException("IllegalArgumentException")
+}
 
 /**
  * Очень сложная
