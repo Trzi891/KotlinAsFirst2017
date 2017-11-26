@@ -264,12 +264,12 @@ fun squareSequenceDigit(n: Int): Int {
     var length = 0
     var num = 0
     var numsqr = 0
-    while( length < n ){
+    while (length < n){
         num ++
         numsqr = num * num
         length += digitNumber( numsqr )
     }
-    return when{
+    return when {
         length == 1 -> 1
         length == n -> numsqr % 10
         else -> {
