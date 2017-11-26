@@ -238,8 +238,16 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
-    val bisector = bisectorByPoints(a,b).crossPoint(bisectorByPoints(b,c))
-    return Circle(bisector, a.distance(bisector))
+    val d1 = a.distance(b)
+    val d2 = b.distance(c)
+    val d3 = a.distance(c)
+    val dsum = d1 + d2 + d3
+    val dmax = Math.max(d1 , Math.max(d2,d3))
+    if (dmax >= dsum - dmax){
+        throw IllegalArgumentException()
+    }
+    val center = bisectorByPoints(a,b).crossPoint(bisectorByPoints(b,c))
+    return Circle(center, a.distance(center))
 }
 
 /**
