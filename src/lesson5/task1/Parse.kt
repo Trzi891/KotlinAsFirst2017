@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson5.task1
 
 /**
@@ -48,12 +49,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -66,19 +65,19 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-val months = listOf( "января","февраля","марта" ,"апреля","мая" , "июня",
-        "июля", "августа","сентября","октября", "ноября", "декабря" )
+val months = listOf("января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря")
 
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    if ( parts.size != 3 ) return ""
+    if (parts.size != 3) return ""
     try {
         val day = parts[0].toInt()
         val month = parts[1]
         val year = parts[2].toInt()
-        if ( day !in 1..31 || month !in months ) return ""
+        if (day !in 1..31 || month !in months) return ""
         return String.format("%02d.%02d.%d", day, months.indexOf(month) + 1, year)
-    }catch (e:NumberFormatException){
+    } catch (e: NumberFormatException) {
         return ""
     }
 
@@ -92,7 +91,7 @@ fun dateStrToDigit(str: String): String {
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-   fun dateDigitToStr(digital: String): String {
+fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     if (parts.size != 3) return ""
     try {
@@ -101,7 +100,7 @@ fun dateStrToDigit(str: String): String {
         val year = parts[2].toInt()
         if (day !in 1..31 || month !in 1..12) return ""
         return String.format("%d %s %d", day, months[month - 1], year)
-    }catch (e:NumberFormatException){
+    } catch (e: NumberFormatException) {
         return ""
     }
 }
@@ -137,15 +136,15 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     val parts = jumps.split(" ").filter { it != "" }
-    var  max = -1
+    var max = -1
     try {
-        for ( part in parts ){
-            if ( part != "%" && part != "-" ){
+        for (part in parts) {
+            if (part != "%" && part != "-") {
                 val number = part.toInt()
-                if ( max < number ) max = number
+                if (max < number) max = number
             }
         }
-    }catch ( e: NumberFormatException ){
+    } catch (e: NumberFormatException) {
         return -1
     }
     return max
@@ -166,13 +165,13 @@ fun bestHighJump(jumps: String): Int {
     var count = 0
     val parts = jumps.split(" ")
     if (parts.size <= 1) return -1
-    else{
-        for ( i in 0..(parts.size - 1) step 2 ){
+    else {
+        for (i in 0..(parts.size - 1) step 2) {
             val jumpregular = Regex("""\d+[-+%]+""")
-            if ( !jumpregular.matches(parts[i] + parts[i + 1]) ) return -1
-            if ( '+' in parts[i + 1] && parts[i].toInt() >= max ){
+            if (!jumpregular.matches(parts[i] + parts[i + 1])) return -1
+            if ('+' in parts[i + 1] && parts[i].toInt() >= max) {
                 max = parts[i].toInt()
-                count ++
+                count++
             }
         }
     }
@@ -190,25 +189,24 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    val sumstring = Regex("""(?:(\d+\s+[-+]\s+)+)?\d+""")
+    val sumString = Regex("""(?:(\d+\s+[-+]\s+)+)?\d+""")
     try {
-        if ( !sumstring.matches(expression) ){
-        throw IllegalArgumentException("IllegalArgumentException")
-    }
-    else{
-        val parts = expression.split(" ")
-        var sum = parts[0].toInt()
-        for ( i in 0 until (parts.size - 2) step 2){
-            if (parts[i + 1] == "+"){
-                sum += parts[i + 2].toInt()
-            }else {
-                sum -= parts[i + 2].toInt()
+        if (!sumString.matches(expression)) {
+            throw IllegalArgumentException()
+        } else {
+            val parts = expression.split(" ")
+            var sum = parts[0].toInt()
+            for (i in 0 until (parts.size - 2) step 2) {
+                if (parts[i + 1] == "+") {
+                    sum += parts[i + 2].toInt()
+                } else {
+                    sum -= parts[i + 2].toInt()
+                }
             }
+            return sum
         }
-        return sum
-    }
-    }catch (e: NumberFormatException){
-        throw IllegalArgumentException("IllegalArgumentException")
+    } catch (e: NumberFormatException) {
+        throw IllegalArgumentException()
     }
 }
 
@@ -247,15 +245,15 @@ fun mostExpensive(description: String): String {
     try {
         val parts = description.split(";")
         var maxprice = 0.0
-        for ( element in parts){
+        for (element in parts) {
             val place = element.lastIndexOf(" ")
             val price = element.drop(place + 1).toDouble()
-            if (price >= maxprice){
+            if (price >= maxprice) {
                 result = element.take(place)
                 maxprice = price
             }
         }
-    }catch (e:NumberFormatException){
+    } catch (e: NumberFormatException) {
         return ""
     }
     return result.trim()
@@ -275,67 +273,51 @@ fun mostExpensive(description: String): String {
 fun fromRoman(roman: String): Int {
     var result = 0
     val romanstr = Regex("""[IVXLCDM]+""")
-    if (!romanstr.matches(roman)) return  -1
-    else{
-        if (roman.length == 1){
-            when(roman[0]){
-                'I' -> result += 1
-                'V' -> result += 5
-                'X' -> result += 10
-                'L' -> result += 50
-                'C' -> result += 100
-                'D' -> result += 500
-                'M' -> result += 1000
-            }
-        }
-        else{
-            for (i in 0 until roman.length ){
-                when(roman[i]){
-                    'M' -> {
-                        if (i == 0) result += 1000
-                        else if (roman[i - 1] == 'C') result += 900
-                        else result += 1000
-                    }
-                    'D' ->{
-                        if (i == 0) result += 500
-                        else if (roman[i - 1] == 'C') result += 400
-                        else result += 500
-                    }
-                    'C' -> {
-                        if (i == 0) {
-                            if (roman[i + 1] != 'D'&& roman[i + 1] != 'M') result += 100
-                        }
-                        else if (i == roman.length - 1) {
-                            if (roman[i - 1] != 'X') result += 100  else result += 90
-                        }
-                        else if ((roman[i - 1] != 'X') && (roman[i + 1] != 'D'&& roman[i + 1] != 'M')) result += 100
-                        else if (roman[i - 1] == 'X')result += 90
-                    }
-                    'L' -> {
-                        if (i == 0) result += 50
-                        else if (roman[i - 1] == 'X') result += 40
-                        else result += 50
-                    }
-                    'X' -> {
-                        if (i == 0) {
-                            if(roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
-                        }
-                        else if (i == roman.length - 1) {
-                            if (roman[i - 1] == 'I') result += 9
-                            else result += 10
-                        }
-                         else if(roman[i]== 'I') result += 9
-                        else if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
-                    }
-                    'V' -> {
-                        if (i == 0) result += 5
-                        else if (roman[i - 1] == 'I') result += 4
-                        else result += 5
-                    }
-                    'I' -> {
-                        if (i == roman.length - 1 ) result += 1
-                        else if (roman[i + 1] != 'V' && roman[i + 1] != 'X') result += 1
-                    }
+    if (!romanstr.matches(roman)) return -1
+    else {
+        val romans = mapOf("I" to 1, "V" to 5, "X" to 10, "L" to 50, "C" to 100, "D" to 500, "M" to 1000)
+        for (i in 0 until roman.length) {
+            when (roman[i]) {
+                'M' -> {
+                    if (i == 0) result += 1000
+                    else if (roman[i - 1] == 'C') result += 900
+                    else result += 1000
+                }
+                'D' -> {
+                    if (i == 0) result += 500
+                    else if (roman[i - 1] == 'C') result += 400
+                    else result += 500
+                }
+                'C' -> {
+                    if (i == 0) {
+                        if (roman[i + 1] != 'D' && roman[i + 1] != 'M') result += 100
+                    } else if (i == roman.length - 1) {
+                        if (roman[i - 1] != 'X') result += 100 else result += 90
+                    } else if ((roman[i - 1] != 'X') && (roman[i + 1] != 'D' && roman[i + 1] != 'M')) result += 100
+                    else if (roman[i - 1] == 'X') result += 90
+                }
+                'L' -> {
+                    if (i == 0) result += 50
+                    else if (roman[i - 1] == 'X') result += 40
+                    else result += 50
+                }
+                'X' -> {
+                    if (i == 0) {
+                        if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
+                    } else if (i == roman.length - 1) {
+                        if (roman[i - 1] == 'I') result += 9
+                        else result += 10
+                    } else if (roman[i] == 'I') result += 9
+                    else if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
+                }
+                'V' -> {
+                    if (i == 0) result += 5
+                    else if (roman[i - 1] == 'I') result += 4
+                    else result += 5
+                }
+                'I' -> {
+                    if (i == roman.length - 1) result += 1
+                    else if (roman[i + 1] != 'V' && roman[i + 1] != 'X') result += 1
                 }
             }
         }
@@ -379,7 +361,7 @@ fun fromRoman(roman: String): Int {
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> =TODO()/*{
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()/*{
     val formal = Regex("""[+-><]+|\[\]""")
     try {
         if ( !formal.matches(commands) ){
