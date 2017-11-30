@@ -237,10 +237,10 @@ fun knightMoveNumber(start: Square, end: Square): Int {
             else -> when (sqr(end.row - start.row) + sqr(end.column - start.column)) {
                 0 -> 0
                 5 -> 1
-                in listOf<Int>(2, 4, 10, 16, 18, 20) -> 2
-                in listOf<Int>(1, 9, 13, 17, 25, 29, 37, 41, 45) -> 3
-                in listOf<Int>(8, 26, 32, 34, 40, 50, 52, 58, 72, 74) -> 4
-                in listOf<Int>(49, 53, 61, 65, 85) -> 5
+                in listOf(2, 4, 10, 16, 18, 20) -> 2
+                in listOf(1, 9, 13, 17, 25, 29, 37, 41, 45) -> 3
+                in listOf(8, 26, 32, 34, 40, 50, 52, 58, 72, 74) -> 4
+                in listOf(49, 53, 61, 65, 85) -> 5
                 else -> 6
             }
         }
