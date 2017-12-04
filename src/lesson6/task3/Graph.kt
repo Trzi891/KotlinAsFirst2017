@@ -9,7 +9,7 @@ class Graph {
 
     private val vertices = mutableMapOf<String, Vertex>()
 
-    private operator fun get(name: String) = vertices[name] ?: throw IllegalArgumentException()
+    private operator fun get(name: String) = vertices[name] ?: throw IllegalArgumentException()//为null则抛出
 
     fun addVertex(name: String) {
         vertices[name] = Vertex(name)

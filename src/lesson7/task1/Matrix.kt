@@ -11,22 +11,22 @@ data class Cell(val row: Int, val column: Int)
  * Интерфейс, описывающий возможности матрицы. E = тип элемента матрицы
  */
 interface Matrix<E> {
-    /** Высота */
+    /** Высота 高，row一行数字的个数（横），column列数*/
     val height: Int
 
-    /** Ширина */
+    /** Ширина 宽，column一列数字的个数（竖），row行数*/
     val width: Int
 
     /**
-     * Доступ к ячейке.
+     * Доступ к ячейке.访问
      * Методы могут бросить исключение, если ячейка не существует или пуста
      */
-    operator fun get(row: Int, column: Int): E
-
+    operator fun get(row: Int, column: Int): E//
+       //格子
     operator fun get(cell: Cell): E
 
     /**
-     * Запись в ячейку.
+     * Запись в ячейку.记录
      * Методы могут бросить исключение, если ячейка не существует
      */
     operator fun set(row: Int, column: Int, value: E)

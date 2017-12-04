@@ -83,14 +83,13 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    val number = n
     var num1 = 1
     var num2 = 1
     var a = 0
     var d = 2
     if (n == 1 || n == 2) return 1
     for (i in 1..n) {
-        if (d < number) {
+        if (d < n) {
             d++
             a = num2
             num2 += num1
