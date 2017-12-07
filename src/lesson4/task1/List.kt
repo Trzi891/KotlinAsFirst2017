@@ -272,10 +272,8 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun pow(base: Int, n: Int): Int {
-    var num = n
     var result = 1
-    while (num > 0) {
-        num--
+    for (i in n-1 downTo 0 ){
         result *= base
     }
     return result

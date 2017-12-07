@@ -40,7 +40,7 @@ data class Square(val column: Int, val row: Int) {
 fun square(notation: String): Square {
     if (!Regex("""[a-h][1-8]""").matches(notation)) {
         throw IllegalArgumentException()
-    } else return Square((notation[0] - 'a') + 1, notation[1].toString().toInt())
+    } else return Square((notation[0] - 'a') + 1, notation[1] - '0')
 }
 
 /**
@@ -202,7 +202,43 @@ fun kingMoveNumber(start: Square, end: Square): Int = when {
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    val moveCount = mutableListOf(start)
+    var moveColumn = start.column
+    var moveRow = start.row
+    while (moveRow != end.row && moveColumn != end.column) {
+        when {
+            end.column > start.column && end.row > start.row -> {
+                moveColumn++
+                moveRow++
+            }
+            end.column > start.column && start.row > end.row -> {
+                moveColumn++
+                moveRow--
+            }
+            end.column < start.column && end.row > start.row -> {
+                moveColumn--
+                moveRow++
+            }
+            else -> {
+                moveColumn++
+                moveRow--
+            }
+        }
+        moveCount.add(Square(moveColumn, moveRow))
+    }
+    while (moveColumn != end.column) {
+        if (end.column > start.column) moveColumn++
+        else moveColumn--
+        moveCount.add(Square(moveColumn, moveRow))
+    }
+    while (moveRow != end.row) {
+        if (end.row > start.row) moveRow++
+        else moveRow--
+        moveCount.add(Square(moveColumn, moveRow))
+    }
+    return moveCount
+}
 
 /**
  * Сложная
@@ -232,7 +268,7 @@ fun sqr(x: Int) = x * x
 
 fun knightMoveNumber(start: Square, end: Square): Int {
     if (start.inside() && end.inside()) {
-        val lstart = listOf<Square>(Square(1, 1), Square(1, 8), Square(8, 1), Square(8, 8))
+        val lstart = listOf(Square(1, 1), Square(1, 8), Square(8, 1), Square(8, 8))
         return when {
             sqr(end.row - start.row) + sqr(end.column - start.column) == 2 && (start in lstart || end in lstart) -> 4
             else -> when (sqr(end.row - start.row) + sqr(end.column - start.column)) {
@@ -245,7 +281,7 @@ fun knightMoveNumber(start: Square, end: Square): Int {
                 else -> 6
             }
         }
-    } else throw IllegalArgumentException("IllegalArgumentException")
+    } else throw IllegalArgumentException()
 }
 
 /**

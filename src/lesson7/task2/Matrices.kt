@@ -60,33 +60,46 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> =TODO()/*{
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val matrix = createMatrix(height, width, 1)
-    var rigthSide = width
+    var rightSide = width
     var leftSide = 0
     var upSide = 0
     var downSide = height
-    var row = 0//行，-
-    var column = 0//列|
+    var row = 0//行，-y
+    var column = 0//列|x
     var count = 1//个数1,2,3,4,5..
-    while (count<= height*width){
-        for (i in leftSide until rigthSide){
+    while (count <= height * width) {
+        for (i in leftSide until rightSide) {
             column = i
-            matrix[row,column] =count
+            matrix[row, column] = count
             count++
         }
         upSide++
-        if (downSide<=upSide)return matrix
-        for (i in upSide until downSide){
+        if (downSide <= upSide) return matrix
+        for (i in upSide until downSide) {
             row = i
-            matrix[row,column]= count
+            matrix[row, column] = count
             count++
         }
-
-
+        rightSide--
+        if (rightSide - leftSide <= 0) return matrix
+        for (k in rightSide - 1 downTo leftSide) {
+            column = k
+            matrix[row, column] = count
+            count++
+        }
+        downSide--
+        if (downSide - upSide <= 0) return matrix
+        for (k in downSide - 1 downTo upSide) {
+            row = k
+            matrix[row, column] = count
+            count++
+        }
+        leftSide++
     }
-
-}*/
+    return matrix
+}
 
 /**
  * Сложная

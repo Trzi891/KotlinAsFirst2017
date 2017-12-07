@@ -272,52 +272,51 @@ fun mostExpensive(description: String): String {
  */
 fun fromRoman(roman: String): Int {
     var result = 0
-    val romanstr = Regex("""[IVXLCDM]+""")
-    if (!romanstr.matches(roman)) return -1
+    if (!Regex("""[IVXLCDM]+""").matches(roman)) return -1
     else {
         val romans = mapOf("I" to 1, "V" to 5, "X" to 10, "L" to 50, "C" to 100, "D" to 500, "M" to 1000)
         for (i in 0 until roman.length) {
             when (roman[i]) {
                 'M' -> {
-                    if (i == 0) result += 1000
+                    if (i == 0) result += romans["M"]!!
                     else if (roman[i - 1] == 'C') result += 900
-                    else result += 1000
+                    else result += romans["M"]!!
                 }
                 'D' -> {
-                    if (i == 0) result += 500
+                    if (i == 0) result += romans["D"]!!
                     else if (roman[i - 1] == 'C') result += 400
-                    else result += 500
+                    else result += romans["D"]!!
                 }
                 'C' -> {
                     if (i == 0) {
-                        if (roman[i + 1] != 'D' && roman[i + 1] != 'M') result += 100
+                        if (roman[i + 1] != 'D' && roman[i + 1] != 'M') result += romans["C"]!!
                     } else if (i == roman.length - 1) {
                         if (roman[i - 1] != 'X') result += 100 else result += 90
-                    } else if ((roman[i - 1] != 'X') && (roman[i + 1] != 'D' && roman[i + 1] != 'M')) result += 100
+                    } else if ((roman[i - 1] != 'X') && (roman[i + 1] != 'D' && roman[i + 1] != 'M')) result += romans["C"]!!
                     else if (roman[i - 1] == 'X') result += 90
                 }
                 'L' -> {
-                    if (i == 0) result += 50
+                    if (i == 0) result += romans["L"]!!
                     else if (roman[i - 1] == 'X') result += 40
-                    else result += 50
+                    else result += romans["L"]!!
                 }
                 'X' -> {
                     if (i == 0) {
-                        if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
+                        if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += romans["X"]!!
                     } else if (i == roman.length - 1) {
                         if (roman[i - 1] == 'I') result += 9
-                        else result += 10
+                        else result += romans["X"]!!
                     } else if (roman[i] == 'I') result += 9
-                    else if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += 10
+                    else if (roman[i + 1] != 'L' && roman[i + 1] != 'C') result += romans["X"]!!
                 }
                 'V' -> {
-                    if (i == 0) result += 5
+                    if (i == 0) result += romans["V"]!!
                     else if (roman[i - 1] == 'I') result += 4
-                    else result += 5
+                    else result += romans["V"]!!
                 }
                 'I' -> {
-                    if (i == roman.length - 1) result += 1
-                    else if (roman[i + 1] != 'V' && roman[i + 1] != 'X') result += 1
+                    if (i == roman.length - 1) result += romans["I"]!!
+                    else if (roman[i + 1] != 'V' && roman[i + 1] != 'X') result += romans["I"]!!
                 }
             }
         }
