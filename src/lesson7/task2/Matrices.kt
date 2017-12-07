@@ -77,22 +77,22 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
         }
         upSide++
         if (downSide <= upSide) return matrix
-        for (i in upSide until downSide) {
-            row = i
+        for (a in upSide until downSide) {
+            row = a
             matrix[row, column] = count
             count++
         }
         rightSide--
         if (rightSide - leftSide <= 0) return matrix
-        for (k in rightSide - 1 downTo leftSide) {
-            column = k
+        for (m in rightSide - 1 downTo leftSide) {
+            column = m
             matrix[row, column] = count
             count++
         }
         downSide--
         if (downSide - upSide <= 0) return matrix
-        for (k in downSide - 1 downTo upSide) {
-            row = k
+        for (n in downSide - 1 downTo upSide) {
+            row = n
             matrix[row, column] = count
             count++
         }

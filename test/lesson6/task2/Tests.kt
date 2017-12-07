@@ -142,7 +142,7 @@ class Tests {
         assertEquals(4, knightMoveNumber(square("h7"), square("f5")))
         assertEquals(4, knightMoveNumber(square("g7"), square("h8")))
         assertEquals(6, knightMoveNumber(square("a8"), square("h1")))
-        //assertEquals(4,knightMoveNumber(square("g8"),square("a8")))
+        assertEquals(4, knightMoveNumber(square("g8"), square("a8")))
     }
 
     private fun List<Square>.assertKnightTrajectory(start: Square, end: Square, length: Int) {
@@ -154,7 +154,7 @@ class Tests {
             val next = this[i + 1]
             assertTrue(
                     Math.abs(next.column - previous.column) == 2 && Math.abs(next.row - previous.row) == 1 ||
-                    Math.abs(next.column - previous.column) == 1 && Math.abs(next.row - previous.row) == 2
+                            Math.abs(next.column - previous.column) == 1 && Math.abs(next.row - previous.row) == 2
             )
         }
     }
