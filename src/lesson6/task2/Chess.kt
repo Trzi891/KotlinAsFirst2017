@@ -3,6 +3,7 @@
 package lesson6.task2
 
 import lesson4.task1.abs
+import lesson6.task3.Graph
 
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
@@ -264,24 +265,21 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
  * 走法： 日， L
  */
-fun sqr(x: Int) = x * x
+//fun sqr(x: Int) = x * x
 
 fun knightMoveNumber(start: Square, end: Square): Int {
-    if (start.inside() && end.inside()) {
-        val lstart = listOf(Square(1, 1), Square(1, 8), Square(8, 1), Square(8, 8))
-        return when {
-            sqr(end.row - start.row) + sqr(end.column - start.column) == 2 && (start in lstart || end in lstart) -> 4
-            else -> when (sqr(end.row - start.row) + sqr(end.column - start.column)) {
-                0 -> 0
-                5 -> 1
-                in listOf(2, 4, 10, 16, 18, 20) -> 2
-                in listOf(1, 9, 13, 17, 25, 29, 37, 41, 45) -> 3
-                in listOf(8, 26, 32, 34, 36, 40, 50, 52, 58, 72, 74) -> 4
-                in listOf(49, 53, 61, 65, 85) -> 5
-                else -> 6
-            }
+    val graph = Graph()
+    for (column in 1..8) {
+        for (row in column..8) {
+            val point = Square(column, row)
+            val pointTan = Square(column + 2, row + 1)
+            val pointStraight = Square(column, row + 2)
+            graph.addVertex("$point")
+            graph.connect("$point", "$pointTan")
+            graph.connect("$point", "$pointStraight")
         }
-    } else throw IllegalArgumentException()
+    }
+    return graph.dfs("$start", "$end")
 }
 
 /**
