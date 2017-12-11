@@ -60,15 +60,16 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
+
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
     val matrix = createMatrix(height, width, 1)
-    var rightSide = width
     var leftSide = 0
     var upSide = 0
-    var downSide = height
-    var row = 0//行，-y
-    var column = 0//列|x
+    var row = 0//行，-y 宽度
+    var column = 0//列|x 高度
     var count = 1//个数1,2,3,4,5..
+    var rightSide = width
+    var downSide = height
     while (count <= height * width) {
         for (i in leftSide until rightSide) {
             column = i
@@ -83,14 +84,14 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
             count++
         }
         rightSide--
-        if (rightSide - leftSide <= 0) return matrix
+        if (rightSide <= leftSide) return matrix
         for (m in rightSide - 1 downTo leftSide) {
             column = m
             matrix[row, column] = count
             count++
         }
         downSide--
-        if (downSide - upSide <= 0) return matrix
+        if (downSide <= upSide) return matrix
         for (n in downSide - 1 downTo upSide) {
             row = n
             matrix[row, column] = count
@@ -115,7 +116,50 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 1)
+    var leftSide = 0
+    var upSide = 0
+    var row = 0
+    var column = 0
+    var rightSide = width
+    var downSide = height
+    var count = 1
+    var circleMatrix = 1
+    while (count <= height * width) {
+        if (leftSide <= rightSide) return matrix
+        for (a in leftSide until rightSide) {
+            column = a
+            matrix[row, column] = circleMatrix
+            count++
+        }
+        upSide++
+        if (downSide <= upSide) return matrix
+        for (b in upSide until downSide) {
+            row = b
+            matrix[row, column] = circleMatrix
+            count++
+        }
+        rightSide--
+        if (leftSide <= rightSide) return matrix
+        for (c in rightSide - 1 downTo leftSide) {
+            column = c
+            matrix[row, column] = circleMatrix
+            count++
+        }
+        downSide--
+        if (downSide <= upSide) return matrix
+        for (k in downSide - 1 downTo upSide) {
+            row = k
+            matrix[row, column] = circleMatrix
+            count++
+        }
+        leftSide++
+        circleMatrix++
+    }
+    return matrix
+}
+
 
 /**
  * Сложная
@@ -130,7 +174,31 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
  * 10 13 16 18
  * 14 17 19 20
  */
-fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSnake(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 1)
+    var leftSide = 0
+    var upSide = 0
+    var i = 0
+    var j = 0
+    var rightSide = width
+    var downSide = height
+    var count = 1
+    var topPoint = 1
+    while (count <= height * width) {
+        matrix[i,j]=count//00=1
+        if (i==0){
+            j++
+            count++//2
+            matrix[i,j]=count//01 = 2
+        }
+        if (j==0){
+            i++
+            count++//3
+            matrix[i,j]=count//10 = 3
+        }
+    }
+    return matrix
+}
 
 /**
  * Средняя
@@ -143,7 +211,15 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height == matrix.width) {
+        val reserveMatrix = createMatrix(matrix.height, matrix.width, matrix[0, 0])
+        for (i in 0 until matrix.height)
+            for (j in 0 until matrix.height)
+                reserveMatrix[i, j] = matrix[matrix.height - j - 1, i]
+        return reserveMatrix
+    } else throw IllegalArgumentException()
+}
 
 /**
  * Сложная
@@ -158,7 +234,27 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
  * 1 2 3
  * 3 1 2
  */
-fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
+fun isLatinSquare(matrix: Matrix<Int>): Boolean {
+    if (matrix.height == matrix.width) {
+        for (j in 0 until matrix.height) {//判断竖着有无重复
+            val listMatrixValue = mutableListOf<Int>()
+            for (i in 0 until matrix.width) {
+                if ((matrix[i, j] !in listMatrixValue) && (matrix[i, j] in 1..matrix.width)) {
+                    listMatrixValue.add(matrix[i, j])
+                } else return false
+            }
+        }
+        for (i in 0 until matrix.width) {//判断横着有无重复
+            val listMatrixValue = mutableListOf<Int>()
+            for (j in 0 until matrix.height) {
+                if ((matrix[i, j] !in listMatrixValue) && (matrix[i, j] in 1..matrix.height)) {
+                    listMatrixValue.add(matrix[i, j])
+                } else return false
+            }
+        }
+    } else throw IllegalArgumentException()
+    return true
+}
 
 /**
  * Средняя

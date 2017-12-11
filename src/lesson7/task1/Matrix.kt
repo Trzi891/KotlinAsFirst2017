@@ -22,7 +22,8 @@ interface Matrix<E> {
      * Методы могут бросить исключение, если ячейка не существует или пуста
      */
     operator fun get(row: Int, column: Int): E//
-       //格子
+
+    //格子
     operator fun get(cell: Cell): E
 
     /**
@@ -101,8 +102,8 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         return result
     }
 
-    override fun toString(): String {
-       val sb = StringBuilder()
+    override fun toString(): String = "MatrixImpl(height=$height, width=$width, cellList=$cellList)"
+/*       val sb = StringBuilder()
         sb.append("[")
         for (row in 0 until height) {
             sb.append("[")
@@ -113,8 +114,7 @@ class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : M
         }
         sb.append("]")
         return "$sb"
-    }
-
+    }*/
 }
 
 
