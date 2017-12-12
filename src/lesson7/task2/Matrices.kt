@@ -78,8 +78,8 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> {
         }
         upSide++
         if (downSide <= upSide) return matrix
-        for (a in upSide until downSide) {
-            row = a
+        for (i in upSide until downSide) {
+            row = i
             matrix[row, column] = count
             count++
         }
@@ -127,7 +127,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
     var count = 1
     var circleMatrix = 1
     while (count <= height * width) {
-        if (leftSide <= rightSide) return matrix
+        if (rightSide <= leftSide) return matrix
         for (a in leftSide until rightSide) {
             column = a
             matrix[row, column] = circleMatrix
@@ -141,7 +141,7 @@ fun generateRectangles(height: Int, width: Int): Matrix<Int> {
             count++
         }
         rightSide--
-        if (leftSide <= rightSide) return matrix
+        if (rightSide <= leftSide) return matrix
         for (c in rightSide - 1 downTo leftSide) {
             column = c
             matrix[row, column] = circleMatrix
@@ -180,21 +180,38 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> {
     var upSide = 0
     var i = 0
     var j = 0
+    var num = 0
     var rightSide = width
     var downSide = height
     var count = 1
     var topPoint = 1
     while (count <= height * width) {
-        matrix[i,j]=count//00=1
-        if (i==0){
-            j++
+        matrix[i, j] = count//00=1
+        j++
+        if (i == 0 && j != 0) {
             count++//2
-            matrix[i,j]=count//01 = 2
+            matrix[i, j] = count//01 = 2
         }
-        if (j==0){
-            i++
-            count++//3
-            matrix[i,j]=count//10 = 3
+        num = i
+        i = j
+        j = num
+        count++
+        matrix[i, j] = count//10=3 //
+
+        if (j == 0 && i != 0) {
+            j = i + 1
+            i = 0
+            count++//4
+            matrix[i, j] = count//02=4
+        }
+        if (i != 0 && i != downSide - 1 && j != 0 && j != rightSide - 1) {
+            for (a in 1..width - 2) {
+                count++
+                matrix[i + a, j - a] = count
+            }
+        }
+        if (j == rightSide - 1 && i != downSide - 1) {
+
         }
     }
     return matrix

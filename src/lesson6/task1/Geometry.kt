@@ -185,7 +185,7 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = Line(s.begin, Math.atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x)))
+fun lineBySegment(s: Segment): Line = Line(s.begin, Math.atan2((s.end.y - s.begin.y), (s.end.x - s.begin.x)))
 
 /**
  * Средняя
@@ -200,7 +200,7 @@ fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
 fun bisectorByPoints(a: Point, b: Point): Line = Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2),
-        Math.atan((b.y - a.y) / (b.x - a.x)) + Math.PI / 2)
+        Math.atan2((b.y - a.y), (b.x - a.x)) + Math.PI / 2)
 
 /**
  * Средняя
@@ -215,7 +215,7 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
         var nearestCircle1 = circles[0]
         var nearestCircle2 = circles[1]
         var min = circles[0].center.distance(circles[1].center)
-        - circles[0].radius - circles[1].radius
+        -circles[0].radius - circles[1].radius
         for (i in 0 until circles.size) {
             for (j in (i + 1) until circles.size) {
                 val lengthBetweenCircles = circles[i].distance(circles[j])
