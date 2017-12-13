@@ -284,19 +284,21 @@ fun neighbors(n: Square): List<Square> {
 }
 
 fun knightMoveNumber(start: Square, end: Square): Int {
-    val queue = ArrayDeque<Square>()
-    queue.add(start)
-    val visited = mutableMapOf(start to 0)
-    while (queue.isNotEmpty()) {
-        val next = queue.poll()
-        val distance = visited[next]!!
-        if (next == end) return distance
-        for (neighbor in neighbors(next)) {
-            if (neighbor in visited) continue
-            visited.put(neighbor, distance + 1)
-            queue.add(neighbor)
+    if (start.inside() && end.inside()) {
+        val queue = ArrayDeque<Square>()
+        queue.add(start)
+        val visited = mutableMapOf(start to 0)
+        while (queue.isNotEmpty()) {
+            val next = queue.poll()
+            val distance = visited[next]!!
+            if (next == end) return distance
+            for (neighbor in neighbors(next)) {
+                if (neighbor in visited) continue
+                visited.put(neighbor, distance + 1)
+                queue.add(neighbor)
+            }
         }
-    }
+    } else throw  IllegalArgumentException()
     return -1
 }
 
@@ -320,21 +322,20 @@ fun knightMoveNumber(start: Square, end: Square): Int {
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()/*{
+fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()/* {
     val moveList = mutableListOf(start)
-    var moveColumn =end.column- start.column
-    var moveRow = end.row-start.row
+    var moveColumn = end.column - start.column
+    var moveRow = end.row - start.row
     while (moveColumn != end.column && moveRow != end.row) {
         when (knightMoveNumber(start, end)) {
             0 -> moveList
             1 -> moveList.add(end)
-            2->{
-                when{
+            2 -> {
+                when {
                     moveColumn
                 }
             }
 
         }
     }
-}
-*/
+}*/
