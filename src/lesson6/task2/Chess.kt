@@ -322,9 +322,23 @@ fun knightMoveNumber(start: Square, end: Square): Int {
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()/* {
+fun knightTrajectory(start: Square, end: Square): List<Square> {
+    if (!start.inside() && !end.inside()) throw IllegalArgumentException()
     val moveList = mutableListOf(start)
-    var moveColumn = end.column - start.column
+    val queue = ArrayDeque<Square>()
+    queue.add(start)
+    val visited = mutableMapOf(start to 0)
+    while (queue.isNotEmpty()) {
+        val next = queue.poll()
+        val distance = visited[next]!!
+        if (next == end) return moveList
+        for (neighbor in neighbors(next)) {
+            if (neighbor in visited) continue
+            visited.put(neighbor, distance + 1)
+            queue.add(neighbor)
+        }
+    }
+    /*var moveColumn = end.column - start.column
     var moveRow = end.row - start.row
     while (moveColumn != end.column && moveRow != end.row) {
         when (knightMoveNumber(start, end)) {
@@ -337,5 +351,6 @@ fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()/* {
             }
 
         }
-    }
-}*/
+    }*/
+    return moveList
+}

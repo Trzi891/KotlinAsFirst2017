@@ -210,7 +210,7 @@ fun bisectorByPoints(a: Point, b: Point): Line = Line(Point((a.x + b.x) / 2, (a.
  */
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     if (circles.size < 2) {
-        throw IllegalAccessException("IllegalAccessException")
+        throw IllegalAccessException()
     } else {
         var nearestCircle1 = circles[0]
         var nearestCircle2 = circles[1]
@@ -249,7 +249,10 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
     if (dmax >= dsum - dmax) {
         throw IllegalArgumentException()
     }
+    val center1 = bisectorByPoints(a, b).crossPoint(bisectorByPoints(a, c))
     val center = bisectorByPoints(a, b).crossPoint(bisectorByPoints(b, c))
+    val center2= bisectorByPoints(b,c ).crossPoint(bisectorByPoints(a, c))
+    if (center!=center1&&center!=center2)throw IllegalArgumentException()
     return Circle(center, a.distance(center))
 }
 
