@@ -4,6 +4,7 @@ package lesson6.task2
 
 import lesson4.task1.abs
 import lesson6.task3.Graph
+import java.util.*
 
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
@@ -263,23 +264,40 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
  *
  * Пример: knightMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Конь может последовательно пройти через клетки (5, 2) и (4, 4) к клетке (6, 3).
- * 走法： 日， L
  */
-//fun sqr(x: Int) = x * x
 
-fun knightMoveNumber(start: Square, end: Square): Int {
-    val graph = Graph()
-    for (column in 1..8) {
-        for (row in column..8) {
-            val point = Square(column, row)
-            val pointTan = Square(column + 2, row + 1)
-            val pointStraight = Square(column, row + 2)
-            graph.addVertex("$point")
-            graph.connect("$point", "$pointTan")
-            graph.connect("$point", "$pointStraight")
+fun neighbors(n: Square): List<Square> {
+    var point = n
+    val result = mutableListOf<Square>()
+    val list = mutableListOf(Square(n.column + 2, n.row + 1),
+            Square(n.column + 2, n.row - 1), Square(n.column - 2, n.row + 1),
+            Square(n.column - 2, n.row - 1), Square(n.column + 1, n.row + 2),
+            Square(n.column + 1, n.row - 2), Square(n.column - 1, n.row + 2),
+            Square(n.column - 1, n.row - 2))
+    for (i in list) {
+        if (i.inside()) {
+            point = i
+            result.add(point)
         }
     }
-    return graph.dfs("$start", "$end")
+    return result
+}
+
+fun knightMoveNumber(start: Square, end: Square): Int {
+    val queue = ArrayDeque<Square>()
+    queue.add(start)
+    val visited = mutableMapOf(start to 0)
+    while (queue.isNotEmpty()) {
+        val next = queue.poll()
+        val distance = visited[next]!!
+        if (next == end) return distance
+        for (neighbor in neighbors(next)) {
+            if (neighbor in visited) continue
+            visited.put(neighbor, distance + 1)
+            queue.add(neighbor)
+        }
+    }
+    return -1
 }
 
 /**
@@ -302,4 +320,21 @@ fun knightMoveNumber(start: Square, end: Square): Int {
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()/*{
+    val moveList = mutableListOf(start)
+    var moveColumn =end.column- start.column
+    var moveRow = end.row-start.row
+    while (moveColumn != end.column && moveRow != end.row) {
+        when (knightMoveNumber(start, end)) {
+            0 -> moveList
+            1 -> moveList.add(end)
+            2->{
+                when{
+                    moveColumn
+                }
+            }
+
+        }
+    }
+}
+*/
