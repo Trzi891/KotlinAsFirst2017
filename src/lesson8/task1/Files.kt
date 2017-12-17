@@ -54,19 +54,44 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  *
  */
 
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()/* {
+fun countSubStringInString(substring: String, str: String): Int {
+    var count = 0
+    return when {
+        substring.length > str.length -> 0
+        substring.length < str.length -> {
+            for (i in 0..str.length - substring.length) {
+                var countIndex = 0
+                for (j in 0 until substring.length) {
+                    if (substring[j].toLowerCase() == str[j + i].toLowerCase()) {
+                        countIndex++
+                    }
+                }
+                if (countIndex == substring.length) {
+                    count++
+                }
+            }
+            return count
+        }
+        else -> 1
+    }
+}
+
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val outputStream = mutableMapOf<String, Int>()
     val textList = mutableListOf<String>()
-    val Substrings = mutableListOf<String>()
+    val substringsList = mutableListOf<String>()
     for (string in substrings) {
-        Substrings.add(string)
+        substringsList.add(string)
     }
     for (line in File(inputName).readLines()) {
         textList.add(line)
     }
-
+    val strTextParts = textList.joinToString(" ")
+    for (string in substringsList) {
+        outputStream.put(string, countSubStringInString(string, strTextParts))
+    }
     return outputStream
-}*/
+}
 
 /**
  * Средняя
