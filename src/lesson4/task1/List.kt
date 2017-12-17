@@ -273,7 +273,7 @@ fun convertToString(n: Int, base: Int): String {
  */
 fun pow(base: Int, n: Int): Int {
     var result = 1
-    for (i in n-1 downTo 0 ){
+    for (i in 1..n) {
         result *= base
     }
     return result
