@@ -53,23 +53,20 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
+
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()/* {
     val outputStream = mutableMapOf<String, Int>()
-    val setSubstrings = mutableSetOf<String>()
     val textList = mutableListOf<String>()
-    for (str in substrings) { // отсеивание повторяющихся substrings
-        setSubstrings.add(str)
+    val Substrings = mutableListOf<String>()
+    for (string in substrings) {
+        Substrings.add(string)
     }
-    for (line in File(inputName).readLines()) { // текстовый спискок
+    for (line in File(inputName).readLines()) {
         textList.add(line)
     }
-    val strTextParts = textList.joinToString(" ") //текст - строка
-    for (str in setSubstrings) {
-        outputStream.put(str, countSubStrInStr(str, strTextParts)) // распределение
-    }
+
     return outputStream
 }*/
-
 
 /**
  * Средняя
@@ -85,7 +82,25 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val lines = File(inputName).readLines()
+    val mistakeChangeMap = mapOf('Ы' to 'И', 'ы' to 'и', 'Ю' to 'У',
+            'ю' to 'у', 'Я' to 'А', 'я' to 'а')
+    for (i in 0 until lines.size) {
+        if (lines[i].length <= 1) {
+            outputStream.write(lines[i])
+        } else {
+            val firstChar = lines[i][0].toString()
+            outputStream.write(firstChar)
+            for (j in 1 until lines[i].length) {
+                if ((lines[i][j] in "ыЫюЮяЯ") && (lines[i][j - 1] in "жЖчЧшШщЩ")) {
+                    outputStream.write(mistakeChangeMap[lines[i][j]].toString())
+                } else outputStream.write(lines[i][j].toString())
+            }
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
