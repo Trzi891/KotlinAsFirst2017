@@ -214,15 +214,15 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
                 moveColumn++
                 moveRow++
             }
-            end.column > start.column && start.row > end.row -> {
+            end.column > start.column && end.row <= start.row -> {
                 moveColumn++
                 moveRow--
             }
-            end.column < start.column && end.row > start.row -> {
+            end.column <= start.column && end.row > start.row -> {
                 moveColumn--
                 moveRow++
             }
-            else -> {
+            end.column <= start.column && end.row <= start.row -> {
                 moveColumn++
                 moveRow--
             }

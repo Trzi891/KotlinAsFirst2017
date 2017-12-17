@@ -154,18 +154,12 @@ class Line private constructor(val b: Double, val angle: Double) {
      * Найти точку пересечения с другой линией.
      * Для этого необходимо составить и решить систему из двух уравнений (каждое для своей прямой)
      */
+
     fun crossPoint(other: Line): Point {
-        val x = when {
-            angle == Math.PI / 2 -> b * -1
-            other.angle == Math.PI / 2 -> other.b * -1
-            else -> ((other.b / Math.cos(other.angle) - b / Math.cos(angle)) /
-                    (Math.tan(angle) - Math.tan(other.angle)))
-        }
-        val y = when {
-            angle == Math.PI / 2 -> other.b
-            other.angle == Math.PI / 2 -> b / Math.cos(angle)
-            else -> x * Math.tan(angle) + b / Math.cos(angle)
-        }
+        val x = (other.b * Math.cos(angle) - b * Math.cos(other.angle)) /
+                (Math.cos(other.angle) * Math.sin(angle) - Math.cos(angle) * Math.sin(other.angle))
+        val y = (other.b * Math.sin(angle) - b * Math.sin(other.angle)) /
+                (Math.cos(other.angle) * Math.sin(angle) - Math.cos(angle) * Math.sin(other.angle))
         return Point(x, y)
     }
 
@@ -249,10 +243,7 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
     if (dmax >= dsum - dmax) {
         throw IllegalArgumentException()
     }
-    val center1 = bisectorByPoints(a, b).crossPoint(bisectorByPoints(a, c))
     val center = bisectorByPoints(a, b).crossPoint(bisectorByPoints(b, c))
-    val center2= bisectorByPoints(b,c ).crossPoint(bisectorByPoints(a, c))
-    if (center!=center1&&center!=center2)throw IllegalArgumentException()
     return Circle(center, a.distance(center))
 }
 

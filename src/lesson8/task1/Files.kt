@@ -118,7 +118,7 @@ fun sibilants(inputName: String, outputName: String) {
             val firstChar = lines[i][0].toString()
             outputStream.write(firstChar)
             for (j in 1 until lines[i].length) {
-                if ((lines[i][j] in "ыЫюЮяЯ") && (lines[i][j - 1] in "жЖчЧшШщЩ")) {
+                if ((lines[i][j] in mistakeChangeMap.keys) && (lines[i][j - 1] in "жЖчЧшШщЩ")) {
                     outputStream.write(mistakeChangeMap[lines[i][j]].toString())
                 } else outputStream.write(lines[i][j].toString())
             }
@@ -146,7 +146,14 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val lines = File(inputName).readLines()
+    for (i in 0 until lines.size) {
+        lines[i].length
+        for (j in 0 until lines[i].length) {
+
+        }
+    }
 }
 
 /**
@@ -223,7 +230,24 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val lines = File(inputName).readLines()
+    for (i in 0 until lines.size) {
+        outputStream.write(lines[i])
+        for (j in 0 until lines[i].length) {
+            var str = lines[i][j].toString().toLowerCase()
+            val setChar = dictionary.keys.toString().toLowerCase()
+            if (lines[i][j].toString() in setChar) {
+                str = dictionary[lines[i][j]]!!
+                if (i == 0 && j == 0) {
+                    str = str[0].toString().toUpperCase()
+                }
+                outputStream.write(str)
+            }else outputStream.write(str)
+        }
+        outputStream.newLine()
+    }
+    outputStream.close()
 }
 
 /**
