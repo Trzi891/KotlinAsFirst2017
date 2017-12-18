@@ -236,17 +236,25 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
-    val abX = a.x - b.x
-    val abY = a.y - b.y
-    val acX = a.x - c.x
-    val acY = a.y - c.y
-    val e = ((a.x - b.x) * (a.x + b.x) - (a.y + b.y) * (b.y - a.y)) / 2
-    val f = ((a.x - c.x) * (a.x + c.x) - (a.y + c.y) * (c.y - a.y)) / 2
-    val delta1 = abY * acX - abX * acY
-    val x0 = (abX * e - abY * f) / delta1
-    val y0 = (acX * e - abX * f) / delta1
-    val center = Point(x0, y0)
-    return Circle(center, a.distance(center))
+    val tempA1 = a.x - b.x
+    val tempB1 = a.y - b.y
+    val tempC1 = (a.x * a.x - b.x * b.x + a.y * a.y - b.y * b.y) / 2
+
+    val tempA2 = c.x - b.x
+    val tempB2 = c.y - b.y
+    val tempC2 = (c.x * c.x - b.x * b.x + c.y * c.y - b.y * b.y) / 2
+
+    var x = 0.0
+    var y = 0.0
+    val temp = tempA1 * tempB2 - tempA2 * tempB1
+    if (temp == 0.0) {
+        x = a.x
+        y = a.y
+    } else {
+        x = (tempC1 * tempB2 - tempC2 * tempB1) / temp
+        y = (tempA1 * tempC2 - tempA2 * tempC1) / temp
+    }
+    return Circle(Point(x, y), Point(x, y).distance(a))
 }
 
 /**
