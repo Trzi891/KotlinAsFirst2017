@@ -291,9 +291,9 @@ fun knightMoveNumber(start: Square, end: Square): Int {
         val visited = mutableMapOf(start to 0)
         while (queue.isNotEmpty()) {
             val next = queue.poll()
-            val distance = visited[next]!!//0
-            if (next == end) return distance//0
-            for (neighbor in neighbors(next)) {//下一个点 的八个方向
+            val distance = visited[next]!!
+            if (next == end) return distance
+            for (neighbor in neighbors(next)) {
                 if (neighbor in visited) continue
                 visited.put(neighbor, distance + 1)
                 queue.add(neighbor)
