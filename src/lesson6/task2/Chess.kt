@@ -205,7 +205,7 @@ fun kingMoveNumber(start: Square, end: Square): Int = when {
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun kingTrajectory(start: Square, end: Square): List<Square> {
-    if (!start.inside()&&!end.inside()) throw IllegalArgumentException()
+    if (!start.inside() && !end.inside()) throw IllegalArgumentException()
     val moveCount = mutableListOf(start)
     var moveColumn = start.column
     var moveRow = start.row
@@ -240,6 +240,7 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
         else moveRow--
         moveCount.add(Square(moveColumn, moveRow))
     }
+    if (moveColumn > 7 && moveRow > 7) throw IllegalArgumentException()
     return moveCount
 }
 
