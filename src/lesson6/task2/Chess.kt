@@ -290,9 +290,9 @@ fun knightMoveNumber(start: Square, end: Square): Int {
         val visited = mutableMapOf(start to 0)
         while (queue.isNotEmpty()) {
             val next = queue.poll()
-            val distance = visited[next]!!
-            if (next == end) return distance
-            for (neighbor in neighbors(next)) {
+            val distance = visited[next]!!//0
+            if (next == end) return distance//0
+            for (neighbor in neighbors(next)) {//下一个点 的八个方向
                 if (neighbor in visited) continue
                 visited.put(neighbor, distance + 1)
                 queue.add(neighbor)
@@ -322,35 +322,68 @@ fun knightMoveNumber(start: Square, end: Square): Int {
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
+
 fun knightTrajectory(start: Square, end: Square): List<Square> {
     if (!start.inside() && !end.inside()) throw IllegalArgumentException()
-    val moveList = mutableListOf(start)
-    val queue = ArrayDeque<Square>()
-    queue.add(start)
-    val visited = mutableMapOf(start to 0)
-    while (queue.isNotEmpty()) {
-        val next = queue.poll()
-        val distance = visited[next]!!
-        if (next == end) return moveList
-        for (neighbor in neighbors(next)) {
-            if (neighbor in visited) continue
-            visited.put(neighbor, distance + 1)
-            queue.add(neighbor)
-        }
-    }
-    /*var moveColumn = end.column - start.column
-    var moveRow = end.row - start.row
-    while (moveColumn != end.column && moveRow != end.row) {
-        when (knightMoveNumber(start, end)) {
-            0 -> moveList
-            1 -> moveList.add(end)
-            2 -> {
-                when {
-                    moveColumn
+    var moveList = mutableListOf(start)
+    when (knightMoveNumber(start, end)) {
+        0 -> moveList
+        1 -> moveList.add(end)
+        2 -> {
+            for (near in neighbors(start)) {
+                if (near in neighbors(end)) {
+                    moveList = mutableListOf(start, near, end)
                 }
             }
-
         }
-    }*/
+        3 -> {
+            for (near in neighbors(start)) {
+                for (nearer in neighbors(near)) {
+                    if (nearer in neighbors(end)) {
+                        moveList = mutableListOf(start, near, nearer, end)
+                    }
+                }
+            }
+        }
+        4 -> {
+            for (near in neighbors(start)) {
+                for (nearer in neighbors(near)) {
+                    for (nearer2 in neighbors(nearer)) {
+                        if (nearer2 in neighbors(end)) {
+                            moveList = mutableListOf(start, near, nearer, nearer2, end)
+                        }
+                    }
+                }
+            }
+        }
+        5 -> {
+            for (near in neighbors(start)) {
+                for (nearer in neighbors(near)) {
+                    for (nearer2 in neighbors(nearer)) {
+                        for (nearer3 in neighbors(nearer2)) {
+                            if (nearer3 in neighbors(end)) {
+                                moveList = mutableListOf(start, near, nearer, nearer2, nearer3, end)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        6 -> {
+            for (near in neighbors(start)) {
+                for (nearer in neighbors(near)) {
+                    for (nearer2 in neighbors(nearer)) {
+                        for (nearer3 in neighbors(nearer2)) {
+                            for (nearer4 in neighbors(nearer3)) {
+                                if (nearer4 in neighbors(end)) {
+                                    moveList = mutableListOf(start, near, nearer, nearer2, nearer3, nearer4, end)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     return moveList
 }
