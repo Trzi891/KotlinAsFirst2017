@@ -5,6 +5,7 @@ package lesson6.task1
 import lesson1.task1.sqr
 import lesson2.task1.segmentLength
 import lesson3.task1.cos
+import lesson4.task1.center
 
 /**
  * Точка на плоскости
@@ -235,15 +236,16 @@ fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
  * построить окружность, описанную вокруг треугольника - эквивалентная задача).
  */
 fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
-    val d1 = a.distance(b)
-    val d2 = b.distance(c)
-    val d3 = a.distance(c)
-    val dsum = d1 + d2 + d3
-    val dmax = maxOf(d1, d2, d3)
-    if (dmax >= dsum - dmax) {
-        throw IllegalArgumentException()
-    }
-    val center = bisectorByPoints(a, b).crossPoint(bisectorByPoints(b, c))
+    val abX = a.x - b.x
+    val abY = a.y - b.y
+    val acX = a.x - c.x
+    val acY = a.y - c.y
+    val e = ((a.x - b.x) * (a.x + b.x) - (a.y + b.y) * (b.y - a.y)) / 2
+    val f = ((a.x - c.x) * (a.x + c.x) - (a.y + c.y) * (c.y - a.y)) / 2
+    val delta1 = abY * acX - abX * acY
+    val x0 = (abX * e - abY * f) / delta1
+    val y0 = (acX * e - abX * f) / delta1
+    val center = Point(x0, y0)
     return Circle(center, a.distance(center))
 }
 
@@ -258,5 +260,27 @@ fun circleByThreePoints(a: Point, b: Point, c: Point): Circle {
  * три точки данного множества, либо иметь своим диаметром отрезок,
  * соединяющий две самые удалённые точки в данном множестве.
  */
-fun minContainingCircle(vararg points: Point): Circle = TODO()
+fun minContainingCircle(vararg points: Point): Circle {
+    if (points.isEmpty()) throw IllegalArgumentException()
+    if (points.size == 1) return Circle(points[0], 0.0)
+    if (points.size == 2) return circleByDiameter(Segment(points[0], points[1]))
+    val segment = diameter(*points)
+    val start = segment.begin
+    val end = segment.end
+    val p = Point(Math.min(start.x, end.x) + Math.abs(start.x - end.x) / 2,
+            Math.min(start.y, end.y) + Math.abs(start.y - end.y) / 2)
+    val rad = start.distance(p)
+    var maxDistance = rad
+    var pointMax = start
+    for (point in points) {
+        if (point.distance(p) > maxDistance) {
+            maxDistance = point.distance(p)
+            pointMax = point
+        }
+    }
+    return when {
+        Math.abs(pointMax.distance(p)) - rad <= 1e-12 -> Circle(p, maxDistance)
+        else -> circleByThreePoints(start, end, pointMax)
+    }
+}
 
