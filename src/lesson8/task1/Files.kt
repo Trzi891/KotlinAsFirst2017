@@ -3,6 +3,8 @@
 package lesson8.task1
 
 import java.io.File
+import java.util.*
+import java.util.regex.Pattern
 
 /**
  * Пример
@@ -59,16 +61,10 @@ fun countSubStringInString(substring: String, str: String): Int {
     return when {
         substring.length > str.length -> 0
         substring.length < str.length -> {
-            for (i in 0..str.length - substring.length) {
-                var countIndex = 0
-                for (j in 0 until substring.length) {
-                    if (substring[j].toLowerCase() == str[j + i].toLowerCase()) {
-                        countIndex++
-                    }
-                }
-                if (countIndex == substring.length) {
-                    count++
-                }
+            val subStr = Pattern.compile(substring.toLowerCase())
+            val lookForSubStr = subStr.matcher(str.toLowerCase())
+            while (lookForSubStr.find()) {
+                count++
             }
             return count
         }
@@ -78,16 +74,9 @@ fun countSubStringInString(substring: String, str: String): Int {
 
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val outputStream = mutableMapOf<String, Int>()
-    val textList = mutableListOf<String>()
-    val substringsList = mutableListOf<String>()
-    for (string in substrings) {
-        substringsList.add(string)
-    }
-    for (line in File(inputName).readLines()) {
-        textList.add(line)
-    }
+    val textList = File(inputName).readLines()
     val strTextParts = textList.joinToString(" ")
-    for (string in substringsList) {
+    for (string in substrings) {
         outputStream.put(string, countSubStringInString(string, strTextParts))
     }
     return outputStream
@@ -148,8 +137,15 @@ fun sibilants(inputName: String, outputName: String) {
 fun centerFile(inputName: String, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
     val lines = File(inputName).readLines()
+    var maxLength = 0
+    var halfLength = 0
     for (i in 0 until lines.size) {
         lines[i].length
+        if (lines[i].length > maxLength) {
+            maxLength = lines[i].length
+        }
+        if (maxLength % 2 == 0) halfLength = maxLength / 2
+        else halfLength = (maxLength - 1) / 2
         for (j in 0 until lines[i].length) {
 
         }
@@ -201,7 +197,22 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    val outputStream = mutableMapOf<String, Int>()
+    val textLines = File(inputName).readLines()
+    val regex = Regex("""[+-=.,/()%$&!?—]+""")
+    val linesStrText = textLines.joinToString(" ").toLowerCase()
+            .replace(regex, " ").split(" ")
+    val russianWords = linesStrText.filter { !Regex("""[a-z]+""").matches(it) }
+    while (outputStream.size < 20) {
+        for (str in russianWords) {
+            for (i in 0 until russianWords.size) {
+                outputStream.put(str, countSubStringInString(str, linesStrText.joinToString("")))
+            }
+        }
+    }
+    return outputStream
+}
 
 /**
  * Средняя
@@ -229,21 +240,27 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  *
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
+fun lowerCase(set: Set<Char>): List<Char> {
+    val lowerCaseSet = mutableListOf<Char>()
+    for (i in set) {
+        lowerCaseSet.add(i.toLowerCase())
+    }
+    return lowerCaseSet
+}
+
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     val outputStream = File(outputName).bufferedWriter()
     val lines = File(inputName).readLines()
     for (i in 0 until lines.size) {
         outputStream.write(lines[i])
         for (j in 0 until lines[i].length) {
-            var str = lines[i][j].toString().toLowerCase()
-            val setChar = dictionary.keys.toString().toLowerCase()
-            if (lines[i][j].toString() in setChar) {
-                str = dictionary[lines[i][j]]!!
-                if (i == 0 && j == 0) {
-                    str = str[0].toString().toUpperCase()
-                }
-                outputStream.write(str)
-            }else outputStream.write(str)
+            var str = lines[i][j].toLowerCase()
+            val setChar = dictionary.keys
+            for (key in setChar) {
+                if (str in lowerCase(dictionary.keys)) {
+                    outputStream.write(dictionary[lines[i][j]].toString())
+                } else outputStream.write(lines[i][j].toString())
+            }
         }
         outputStream.newLine()
     }

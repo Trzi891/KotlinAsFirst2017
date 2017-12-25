@@ -274,48 +274,13 @@ fun fromRoman(roman: String): Int {
     var result = 0
     if (!Regex("""[IVXLCDM]+""").matches(roman)) return -1
     else {
-        val romans = mapOf("I" to 1, "V" to 5, "X" to 10, "L" to 50, "C" to 100, "D" to 500, "M" to 1000)
-        for (i in 0 until roman.length) {
-            if (roman[i] == 'M') {
-                result += romans["M"]!!
-                if (i != 0 && roman[i - 1] == 'C') result -= romans["C"]!!
-            }
-            if (roman[i] == 'D') {
-                result += romans["D"]!!
-                if (i != 0 && roman[i - 1] == 'C') result -= romans["C"]!!
-            }
-            if (roman[i] == 'C') {
-                if (i == roman.length - 1) {
-                    result += romans["C"]!!
-                    if (i != 0 && roman[i - 1] == 'X') result -= romans["X"]!!
-                }
-                if (i in (1 until roman.length - 1) && roman[i + 1] != 'D' && roman[i + 1] != 'M') {
-                    result += romans["C"]!!
-                    if (roman[i - 1] == 'X') result -= romans["X"]!!
-                }
-            }
-            if (roman[i] == 'L') {
-                result += romans["L"]!!
-                if (i != 0 && roman[i - 1] == 'X') result -= romans["X"]!!
-            }
-            if (roman[i] == 'X') {
-                if (i == roman.length - 1) {
-                    result += romans["X"]!!
-                    if (i != 0 && roman[i - 1] == 'I') result -= romans["I"]!!
-                }
-                if (i in (1 until roman.length - 1) && roman[i + 1] != 'L' && roman[i + 1] != 'C') {
-                    result += romans["X"]!!
-                    if (roman[i - 1] == 'I') result -= romans["I"]!!
-                }
-            }
-            if (roman[i] == 'V') {
-                result += romans["V"]!!
-                if (i != 0 && roman[i - 1] == 'I') result -= romans["I"]!!
-            }
-            if (roman[i] == 'I') {
-                if (i == roman.length - 1) result += romans["I"]!!
-                else if (roman[i + 1] != 'V' && roman[i + 1] != 'X') result += romans["I"]!!
-            }
+        val romans = mapOf("I" to 1, "V" to 5, "X" to 10, "L" to 50, "C" to 100, "D" to 500,
+                "M" to 1000, "IV" to 4, "IX" to 9, "XL" to 40, "XC" to 90, "CD" to 400, "CM" to 900)
+        for (i in roman.length - 1 downTo 0) {
+            val string = romans[roman[i].toString()]!!
+            if (i == roman.length - 1 ||
+                    romans[roman[i + 1].toString()]!! <= romans[roman[i].toString()]!!) result += string
+            else result -= string
         }
     }
     return result

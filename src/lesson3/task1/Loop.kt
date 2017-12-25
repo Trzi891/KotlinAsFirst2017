@@ -263,12 +263,12 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
 
-fun sequenceDigit(placeNumber: Int, sequenceLength: Int, number: Int): Int = when (sequenceLength) {
+fun sequenceDigit(placeNumber: Int, sequenceLength: Int, sequenceDigit: Int): Int = when (sequenceLength) {
     1 -> 1
-    placeNumber -> number % 10
+    placeNumber -> sequenceDigit % 10
     else -> {
         val delta = sequenceLength - placeNumber
-        var result = number
+        var result = sequenceDigit
         for (i in 1..delta) {
             result /= 10
         }

@@ -240,7 +240,7 @@ fun kingTrajectory(start: Square, end: Square): List<Square> {
         else moveRow--
         moveCount.add(Square(moveColumn, moveRow))
     }
-    if (moveColumn > 7 && moveRow > 7) throw IllegalArgumentException()
+    if (!Square(moveColumn, moveRow).inside()) throw IllegalArgumentException()
     return moveCount
 }
 
